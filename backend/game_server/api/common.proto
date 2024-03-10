@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "./messages";
+
+message AuthData {
+    string room_code = 1;
+    string player_id = 2;
+    string auth_token = 3;
+}
+
+enum HintType {
+    SkipQuestion = 0;
+    MajorityOpinion = 1;
+    TwoOpinions = 2;
+}

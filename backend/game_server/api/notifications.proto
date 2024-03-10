@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "./messages";
+
+import "gamestate.proto";
+
+message GameStateNotification {
+    RootGameState gamestate = 1;
+}

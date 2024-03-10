@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package = "./messages";
+
+import "common.proto";
+
+message RootRequest {
+    oneof request {
+        CreateRoomRequest create_room = 1;
+        JoinRoomRequest join_room = 2;
+        ChangeNameRequest change_name = 3;
+        ChooseMainPlayerRequest choose_main_player = 4;
+        StartGameRequest start_game = 5;
+        MakeQuestionRequest make_question = 6;
+        GiveAnswerRequest give_answer = 7;
+        GetGameStateRequest get_game_state = 8;
+        SkipTimeRequest skip_time = 9;
+    }
+}
+
+message CreateRoomRequest {
+    string request_id = 1;
+}
+
+message JoinRoomRequest {
+    string request_id = 1;
+    string room_code = 2;
+}
+
+message ChangeNameRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+    string new_name = 3;
+}
+
+message ChooseMainPlayerRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+    oneof choice_strategy {
+        bool random = 3;
+        string specific_player_id = 4;
+    }
+}
+
+message StartGameRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+}
+
+message MakeQuestionRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+    string question = 3;
+    repeated string answer_options = 4;
+    int32 right_answer_idx = 5;
+}
+
+message GiveAnswerRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+    oneof answer {
+        int32 answer_idx = 3;
+        HintType hint = 4;
+    }
+}
+
+message GetGameStateRequest {
+    string request_id = 1;
+    AuthData auth_data = 2;
+}
+
+message SkipTimeRequest {
+    string request_id = 1;
+    string room_code = 2;
+    uint64 miliseconds = 3;
+}

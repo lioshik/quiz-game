@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+option go_package = "./messages";
+
+message RootGameState {
+    oneof state {
+        LobbyGameState lobby = 1;
+        WaitForQuestionState wait_for_question = 2;
+        WaitForAnswerState wait_for_answer = 3;
+        WaitForMainPlayerState wait_for_main_player = 4;
+        GameOver game_over = 5;
+    }
+}
+
+// --- game states ---
+enum PlayerType {
+    Participant = 0;
+    MainPlayer = 1;
+    Host = 2;
+}
+
+message Player {
+    string player_id = 1;
+    string player_name = 2;
+    PlayerType player_type = 3;
+    bool answer_given = 4;
+    bool still_alive = 5;
+}
+
+message RunningGamePlayersInfo {
+    repeated Player players = 1;
+    int64 main_player_score = 2;
+    bool hint_skip_question_available = 3;
+    bool hint_majority_opinion_available = 4;
+    bool hint_two_opinions_available = 5;
+}
+
+enum ChooseMainPlayerStrategy {
+    Random = 0;
+    Specific = 1;
+}
+
+message LobbyGameState {
+    repeated Player players = 1;
+    ChooseMainPlayerStrategy choose_main_player_strategy = 2;
+    optional string main_player_id = 3;
+}
+
+message WaitForQuestionState {
+    RunningGamePlayersInfo players_info = 1;
+}
+
+message QuestionInfo {
+    string question = 2;
+    repeated string answer_options = 3;
+}
+
+message WaitForAnswerState {
+    RunningGamePlayersInfo players_info = 1;
+    QuestionInfo question_info = 2;
+    uint64 miliseconds_left = 3;
+}
+
+message SpoiledAnswer {
+    string player_id = 1;
+    uint32 answer_idx = 2;
+}
+
+message WaitForMainPlayerState {
+    RunningGamePlayersInfo players_info = 1;
+    QuestionInfo question_info = 2;
+    repeated SpoiledAnswer spoiled_answers = 3;
+}
+
+// TODO
+// message RoundResultsState {
+//     RunningGamePlayersInfo players_info = 1;
+//     QuestionInfo question_info = 2;
+//     uint32 right_answer_idx = 3;
+//     map<uint32, uint32> players_answers = 4;
+//     optional HintType hint_taken = 5;
+//     bool is_over = 6;
+// }
+
+message GameOver {
+    // TODO
+}

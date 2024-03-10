@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+option go_package = "./messages";
+
+import "common.proto";
+import "gamestate.proto";
+
+message RootResponse {
+    oneof response {
+        CreateRoomResponse create_room = 1;
+        JoinRoomResponse join_room = 2;
+        ChangeNameResponse change_name = 3;
+        ChooseMainPlayerResponse choose_main_player = 4;
+        StartGameResponse start_game_response = 5;
+        MakeQuestionResponse make_question_response = 6;
+        GiveAnswerResponse give_answer_response = 7;
+        GetGameStateResponse get_gamestate_response = 8;
+        SkipTimeResponse skip_time_response = 9;
+    }
+}
+
+// --- create room ---
+message CreateRoomResponseOk {
+    AuthData auth_data = 1;
+}
+
+message CreateRoomResponseErr {
+    string err = 1;
+}
+
+message CreateRoomResponse {
+    string request_id = 1;
+    oneof response {
+        CreateRoomResponseOk ok = 2;
+        CreateRoomResponseErr err = 3;
+    }
+}
+
+// --- join room ---
+message JoinRoomResponseOk {
+    AuthData auth_data = 1;
+}
+
+message JoinRoomResponseErr {
+    string err = 1;
+}
+
+message JoinRoomResponse {
+    string request_id = 1;
+    oneof response {
+        JoinRoomResponseOk ok = 2;
+        JoinRoomResponseErr err = 3;
+    }
+}
+
+// --- change name ---
+message ChangeNameResponseOk {}
+
+message ChangeNameResponseErr {
+    string err = 1;
+}
+
+message ChangeNameResponse {
+    string request_id = 1;
+    oneof response {
+        ChangeNameResponseOk ok = 2;
+        ChangeNameResponseErr err = 3;
+    }
+}
+
+// --- choose main player ---
+message ChooseMainPlayerResponseOk {}
+
+message ChooseMainPlayerResponseErr {
+    string err = 1;
+}
+
+message ChooseMainPlayerResponse {
+    string request_id = 1;
+    oneof response {
+        ChooseMainPlayerResponseOk ok = 2;
+        ChooseMainPlayerResponseErr err = 3;
+    }
+}
+
+// --- start game ---
+message StartGameResponseOk {}
+
+message StartGameResponseErr {
+    string err = 1;
+}
+
+message StartGameResponse {
+    string request_id = 1;
+    oneof response {
+        StartGameResponseOk ok = 2;
+        StartGameResponseErr err = 3;
+    }
+}
+
+// --- make question ---
+message MakeQuestionResponseOk {}
+
+message MakeQuestionResponseErr {
+    string err = 1;
+}
+
+message MakeQuestionResponse {
+    string request_id = 1;
+    oneof response {
+        MakeQuestionResponseOk ok = 2;
+        MakeQuestionResponseErr err = 3;
+    }
+}
+
+// --- give answer ---
+message GiveAnswerResponseOk {}
+
+message GiveAnswerResponseErr {
+    string err = 1;
+}
+
+message GiveAnswerResponse {
+    string request_id = 1;
+    oneof response {
+        GiveAnswerResponseOk ok = 2;
+        GiveAnswerResponseErr err = 3;
+    }
+}
+
+// --- get game state ---
+message GetGameStateResponseOk {
+    RootGameState gamestate = 1;
+}
+
+message GetGameStateResponseErr {
+    string err = 1;
+}
+
+message GetGameStateResponse {
+    string request_id = 1;
+    oneof response {
+        GetGameStateResponseOk ok = 2;
+        GetGameStateResponseErr err = 3;
+    }
+}
+
+// --- skip time ---
+message SkipTimeResponseOk {}
+
+message SkipTimeResponseErr {
+    string err = 1;
+}
+
+message SkipTimeResponse {
+    string request_id = 1;
+    oneof response {
+        SkipTimeResponseOk ok = 2;
+        SkipTimeResponseErr err = 3;
+    }
+}
