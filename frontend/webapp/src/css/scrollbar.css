@@ -1,0 +1,22 @@
+/* Change the scrollbars to be minimalistic thin with round corners */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+
+/* Style for the thumb of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+/* Style for the track of the scrollbar */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Remove the arrows from the scrollbar */
+::-webkit-scrollbar-button {
+    display: none;
+}
