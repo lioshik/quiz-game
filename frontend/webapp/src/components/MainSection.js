@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Rules from "./Rules";
+import StartPage from "./StartPage";
 
 export class MainSection extends Component {
   render() {
     return (
-      <section>
-        <Rules></Rules>
-      </section>
+      <main>
+        <StartPage></StartPage>
+      </main>
     );
   }
 }

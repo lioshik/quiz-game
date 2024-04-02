@@ -38,8 +38,8 @@ export class Rules extends Component {
 
   render() {
     const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
-      console.log("render button group");
-      console.log(rest);
+      // console.log("render button group");
+      // console.log(rest);
       return (
         <div className="carousel-button-group">
           {" "}
@@ -61,7 +61,6 @@ export class Rules extends Component {
                 ? { visibility: "hidden", pointerEvents: "none" }
                 : null
             }
-            className="regular-button"
             onClick={() => next()}
           >
             <span>next</span>
@@ -72,7 +71,7 @@ export class Rules extends Component {
     };
 
     return (
-      <div className="game-rules-wrapper">
+      <section className="game-rules-wrapper main-content-wrapper">
         <Carousel
           customButtonGroup={<ButtonGroup state={this.state} />}
           renderButtonGroupOutside={true}
@@ -104,7 +103,7 @@ export class Rules extends Component {
             );
           })}
         </Carousel>
-      </div>
+      </section>
     );
   }
 }

@@ -32,8 +32,9 @@ button {
   padding-bottom: 0.7rem;
   box-shadow: 0px 5px 0px 0px #301a6bda;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  min-width: 0;
 }
 
 button:hover {
@@ -44,8 +45,33 @@ button:hover {
 button svg {
   transform-origin: center;
   transform: scale(1.3);
+  min-width: 19px;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+input {
+  background-color: rgba(83, 27, 27, 0.5);
+  border: 0px;
+  font-weight: 900;
+  color: white;
+  padding: 0.7rem;
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: 150ms;
+  text-align: center;
+}
+
+input::placeholder {
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+.non-empty-input {
+  background-color: rgba(83, 27, 27, 0.5);
 }
 
 h3 {
@@ -60,7 +86,7 @@ a {
 }
 
 .gradient-background {
-  background: linear-gradient(to bottom, #8a2387, #e94057, #f27121);
+  background: linear-gradient(to bottom, #8a2387, #e94057, 80%, #f27121);
   align-items: center;
   height: 100%;
   min-height: 100vh;
@@ -135,7 +161,6 @@ header ul {
 }
 
 .game-rules-wrapper {
-  max-width: 80%;
   background: rgba(80, 24, 81, 0.25);
   border-radius: 10px;
   padding: 2rem;
@@ -143,8 +168,11 @@ header ul {
   padding-left: 0px;
   padding-right: 0px;
   color: #3a2395;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.game-rules-wrapper button {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .carousel-container {
@@ -186,4 +214,67 @@ header ul {
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.main-content-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+}
+
+.join-or-create-wrapper {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.join-or-create-wrapper button {
+  margin-left: 5%;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  font-size: 30px;
+  width: 50%;
+  margin-right: 0px;
+}
+
+.join-or-create-wrapper button svg {
+  transform-origin: center;
+  transform: scale(0.8);
+}
+
+.join-room-wrapper {
+  margin-left: 0%;
+  margin-right: 0%;
+  width: 50%;
+}
+
+.join-room-wrapper input {
+  min-width: 0;
+  font-size: 30px;
+  width: 100%;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  height: 60px;
+  overflow-wrap: break-word;
+}
+
+.join-room-wrapper button {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  margin-left: 0%;
+  margin-right: 0%;
+  width: 100%;
+  height: 60px;
+  font-size: 19px;
+}
+
+.join-room-wrapper button svg {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 500px) {
+  .join-or-create-wrapper button, .join-or-create-wrapper input{
+    font-size: 19px;
+  }
 }
