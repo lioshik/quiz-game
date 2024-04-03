@@ -62,8 +62,9 @@ input {
   text-align: center;
 }
 
-input::placeholder {
+input::placeholder, ::-webkit-input-placeholder {
   text-align: center;
+  color: #d4a49d;
 }
 
 input:focus {
@@ -228,12 +229,12 @@ header ul {
   align-items: center;
 }
 
-.join-or-create-wrapper button {
+.create-room-button {
   margin-left: 5%;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
   font-size: 30px;
-  width: 50%;
+  width: 40%;
   margin-right: 0px;
 }
 
@@ -245,7 +246,7 @@ header ul {
 .join-room-wrapper {
   margin-left: 0%;
   margin-right: 0%;
-  width: 50%;
+  width: 60%;
 }
 
 .join-room-wrapper input {
@@ -274,7 +275,30 @@ header ul {
 }
 
 @media (max-width: 500px) {
-  .join-or-create-wrapper button, .join-or-create-wrapper input{
+  .join-or-create-wrapper button,
+  .join-or-create-wrapper input {
     font-size: 19px;
+  }
+  .join-room-wrapper {
+    width: 50%;
+  }
+  .create-room-button {
+    width: 50%;
+  }
+
+  .create-room-button {
+    width: 50%;
+    padding: 1.8rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .join-room-wrapper input {
+    height: 40px;
+  }
+
+  .join-room-wrapper button {
+    height: 40px;
+    text-transform: lowercase;
   }
 }

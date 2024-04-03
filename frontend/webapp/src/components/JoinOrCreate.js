@@ -18,7 +18,7 @@ export class JoinOrCreate extends Component {
     return (
       <section className="join-or-create-wrapper main-content-wrapper">
         <JoinRoom></JoinRoom>
-        <button>
+        <button className="create-room-button">
           <span>create</span>
           <FaPlus></FaPlus>
         </button>
