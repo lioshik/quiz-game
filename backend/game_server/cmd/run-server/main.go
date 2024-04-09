@@ -13,6 +13,7 @@ import (
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  5120,
 	WriteBufferSize: 5120,
+	CheckOrigin:     func(_ *http.Request) bool { return true },
 }
 
 func serveWs(w http.ResponseWriter, hub *client.ClientsHub, r *http.Request) {

@@ -6,16 +6,16 @@ generate_protobuf:
 clean_generated_files:
 	rm -rf ./internal/gen/*;
 
-run_server build_server:
+run_server: build_server
 	./game_server
 
-build_server run_code_generation:
+build_server: run_code_generation
 	go build -o game_server ./cmd/run-server/main.go
 
 docker_build_image:
 	docker build -t game_server .
 
-docker_run docker_build_image:
+docker_run: docker_build_image
 	docker rm -f game_server_container
 	docker run -p 8080:8080 -it --name game_server_container game_server
 
