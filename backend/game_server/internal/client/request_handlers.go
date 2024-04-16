@@ -459,10 +459,30 @@ func (c *ClientConnection) sendGetGameStateError(request *messages.GetGameStateR
 	c.sendMessage(response)
 }
 
+func (c *ClientConnection) sendGetGameInvalidAuth(
+	request *messages.GetGameStateRequest,
+	err error,
+) {
+	slog.Warn(err.Error())
+	response := &messages.RootResponse{
+		Response: &messages.RootResponse_GetGamestateResponse{
+			GetGamestateResponse: &messages.GetGameStateResponse{
+				RequestId: request.RequestId,
+				Response: &messages.GetGameStateResponse_InvalidAuth{
+					InvalidAuth: &messages.GetGameStateInvalidAuth{
+						Err: err.Error(),
+					},
+				},
+			},
+		},
+	}
+	c.sendMessage(response)
+}
+
 func (c *ClientConnection) handleGetGameState(request *messages.GetGameStateRequest) {
 	guardedState, err := c.hub.getGuardedGamestate(roomCode(request.AuthData.RoomCode))
 	if err != nil {
-		c.sendGetGameStateError(request, err)
+		c.sendGetGameInvalidAuth(request, err)
 		return
 	}
 

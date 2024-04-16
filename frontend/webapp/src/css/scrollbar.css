@@ -1,22 +1,27 @@
 /* Change the scrollbars to be minimalistic thin with round corners */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
+    width: 4px; /* Maintain the thin scrollbar */
+    height: 6px; /* Adjusted for better rendering */
+    background-color: transparent; /* Considering no specific background is needed */
 }
 
 /* Style for the thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.2); /* Slight transparency */
+    border-radius: 2px; /* Rounded corners for the thumb */
 }
 
 /* Style for the track of the scrollbar */
 ::-webkit-scrollbar-track {
-    background-color: transparent;
+    background-color: transparent; /* Consistent with general styling */
 }
 
 /* Remove the arrows from the scrollbar */
 ::-webkit-scrollbar-button {
+    display: none; /* Keep this set to none to hide buttons */
+}
+
+/* Hide the scrollbar corner */
+::-webkit-scrollbar-corner {
     display: none;
 }

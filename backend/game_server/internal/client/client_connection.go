@@ -50,7 +50,7 @@ func (c *ClientConnection) sendMessage(m proto.Message) {
 }
 
 func (c *ClientConnection) handleRequest(request *messages.RootRequest) {
-	slog.Info("start handling request")
+	slog.Info("start handling request", "request", request)
 	switch request := request.Request.(type) {
 	case *messages.RootRequest_CreateRoom:
 		c.handleCreateRoom(request.CreateRoom)

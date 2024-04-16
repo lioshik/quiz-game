@@ -4,9 +4,11 @@ option go_package = "./messages";
 
 import "common.proto";
 import "gamestate.proto";
+import "notifications.proto";
 
 message RootResponse {
     oneof response {
+        // responses
         CreateRoomResponse create_room = 1;
         JoinRoomResponse join_room = 2;
         ChangeNameResponse change_name = 3;
@@ -16,6 +18,8 @@ message RootResponse {
         GiveAnswerResponse give_answer_response = 7;
         GetGameStateResponse get_gamestate_response = 8;
         SkipTimeResponse skip_time_response = 9;
+        // notifications
+        GameStateNotification notification_gamestate = 10;
     }
 }
 
@@ -133,6 +137,10 @@ message GetGameStateResponseOk {
     RootGameState gamestate = 1;
 }
 
+message GetGameStateInvalidAuth {
+    string err = 1;
+}
+
 message GetGameStateResponseErr {
     string err = 1;
 }
@@ -142,6 +150,7 @@ message GetGameStateResponse {
     oneof response {
         GetGameStateResponseOk ok = 2;
         GetGameStateResponseErr err = 3;
+        GetGameStateInvalidAuth invalid_auth = 4;
     }
 }
 

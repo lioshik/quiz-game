@@ -48,7 +48,7 @@ func (h *ClientsHub) addRoom() roomCode {
 	defer h.gamestateByCodeGuard.Unlock()
 
 	for {
-		code := generateRoomCode(4)
+		code := generateRoomCode(6)
 		if _, exists := h.gamestateByCode[code]; exists {
 			continue
 		}

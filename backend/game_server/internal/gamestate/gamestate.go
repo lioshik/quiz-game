@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"math/rand"
 	"strconv"
+	"unicode/utf8"
 )
 
 type StateType int
@@ -160,18 +161,31 @@ func (state *GameState) AddPlayer() (PlayerId, error) {
 	return playerId, nil
 }
 
-func (state *GameState) PlayerChangeName(id *PlayerId, new_name *PlayerName) error {
+func (state *GameState) PlayerChangeName(id *PlayerId, newName *PlayerName) error {
 	if state.stateType != Lobby {
 		return errors.New("Changing name is available only in Lobby")
 	}
-	if len(*new_name) == 0 {
+	if len(*newName) == 0 {
 		return errors.New("Name can't be empty")
+	}
+	if utf8.RuneCountInString(string(*newName)) > 10 {
+		return errors.New("Name can't bet longer than 10 characters")
 	}
 	if err := state.errorIfPlayerNotExists(id); err != nil {
 		return err
 	}
-	state.players[*id].name = new_name
-	state.logger.Info(fmt.Sprintf("Player with id=%q changed name to %q", *id, *new_name))
+	nameAlreadyTaken := false
+	for _, player := range state.players {
+		if *player.name == *newName {
+			nameAlreadyTaken = true
+			break
+		}
+	}
+	if nameAlreadyTaken {
+		return errors.New("Name is already taken")
+	}
+	state.players[*id].name = newName
+	state.logger.Info(fmt.Sprintf("Player with id=%q changed name to %q", *id, *newName))
 	return nil
 }
 

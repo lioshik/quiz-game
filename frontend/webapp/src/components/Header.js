@@ -6,11 +6,11 @@ export class Header extends Component {
     return (
       <header>
         <div className="logo-wrapper">
-          <img src="owl.svg"></img>
+          <img src="owl.svg" alt="owl icon"></img>
           <span>SOME QUIZ GAME</span>
         </div>
         <ul>
-          <li>
+          <li key={"guthub"}>
             <a
               className="source-wrapper"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
