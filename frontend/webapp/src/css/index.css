@@ -393,7 +393,7 @@ header ul {
 
 .players-list {
   max-height: 500px;
-  overflow: scroll;
+  overflow: overlay;
 }
 
 .player-item {
@@ -510,7 +510,7 @@ header ul {
   display: flex;
   flex-direction: column;
   background: white;
-  overflow: scroll;
+  overflow-y: overlay;
 }
 
 .popup-arrow {
