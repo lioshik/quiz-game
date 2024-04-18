@@ -1,7 +1,7 @@
 {
     "protoc": {
         "options": [
-            "--proto_path=game_server/api/"
+            "--proto_path=api/"
         ]
     },
 }
