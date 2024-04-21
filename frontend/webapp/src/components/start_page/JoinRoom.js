@@ -25,7 +25,7 @@ export class JoinRoom extends Component {
           placeholder="enter code"
         />
         <button
-          disabled={this.state.inputText === ""}
+          disabled={this.state.inputText === "" ? true : undefined}
           onClick={() => webSocketService.sendJoinRoom(this.state.inputText)}
         >
           <span>JOIN</span>

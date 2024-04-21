@@ -13,7 +13,7 @@ export class StartGame extends Component {
         {
           <button
             disabled={
-              !iAmHost || this.props.players.length < 3 ? "true" : undefined
+              !iAmHost || this.props.players.length < 3 ? true : undefined
             }
             onClick={() => {
               webSocketService.sendStartGame(this.props.authData);

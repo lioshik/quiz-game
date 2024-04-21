@@ -87,7 +87,7 @@ class WebSocketService {
         this.cancelTimeoutMessage(createRoomResponse.requestId);
 
         if (createRoomResponse.hasOwnProperty("err")) {
-          console.log("error on create room", createRoomResponse.err.err);
+          console.warn("error on create room", createRoomResponse.err.err);
         } else if (createRoomResponse.hasOwnProperty("ok")) {
           console.log("ok create room response");
           this.store.dispatch(setAuthData(createRoomResponse.ok.authData));
@@ -97,7 +97,7 @@ class WebSocketService {
         this.cancelTimeoutMessage(getGamestateResponse.requestId);
 
         if (getGamestateResponse.hasOwnProperty("err")) {
-          console.log("error on get state", getGamestateResponse.err.err);
+          console.warn("error on get state", getGamestateResponse.err.err);
         } else if (getGamestateResponse.hasOwnProperty("invalidAuth")) {
           console.log("invalid auth", getGamestateResponse.invalidAuth.err);
           this.store.dispatch(goStartPage());
@@ -105,6 +105,20 @@ class WebSocketService {
           if (getGamestateResponse.ok.gamestate.hasOwnProperty("lobby")) {
             this.sortPlayersByPlayerId(
               getGamestateResponse.ok.gamestate.lobby.players
+            );
+          } else if (
+            getGamestateResponse.ok.gamestate.hasOwnProperty("waitForQuestion")
+          ) {
+            this.sortPlayersByPlayerId(
+              getGamestateResponse.ok.gamestate.waitForQuestion.playersInfo
+                .players
+            );
+          } else if (
+            getGamestateResponse.ok.gamestate.hasOwnProperty("waitForAnswer")
+          ) {
+            this.sortPlayersByPlayerId(
+              getGamestateResponse.ok.gamestate.waitForAnswer.playersInfo
+                .players
             );
           }
           this.store.dispatch(setGamestate(getGamestateResponse.ok.gamestate));
@@ -114,7 +128,7 @@ class WebSocketService {
         this.cancelTimeoutMessage(joinRoomResponse.requestId);
 
         if (joinRoomResponse.hasOwnProperty("err")) {
-          console.log("error on join room", joinRoomResponse.err.err);
+          console.warn("error on join room", joinRoomResponse.err.err);
         } else if (joinRoomResponse.hasOwnProperty("ok")) {
           this.store.dispatch(setAuthData(joinRoomResponse.ok.authData));
         }
@@ -123,7 +137,7 @@ class WebSocketService {
         this.cancelTimeoutMessage(changeNameResponse.requestId);
 
         if (changeNameResponse.hasOwnProperty("err")) {
-          console.log("error on change name", changeNameResponse.err.err);
+          console.warn("error on change name", changeNameResponse.err.err);
         }
       } else if (decodedResponse.hasOwnProperty("chooseMainPlayer")) {
         const chooseMainPlayerResponse = decodedResponse.chooseMainPlayer;
@@ -144,7 +158,14 @@ class WebSocketService {
         this.cancelTimeoutMessage(startGameResponse.requestId);
 
         if (startGameResponse.hasOwnProperty("err")) {
-          console.log("error on start game", startGameResponse.err.err);
+          console.warn("error on start game", startGameResponse.err.err);
+        }
+      } else if (decodedResponse.hasOwnProperty("makeQuestionResponse")) {
+        const makeQuestionResponse = decodedResponse.makeQuestionResponse;
+        this.cancelTimeoutMessage(makeQuestionResponse.requestId);
+
+        if (makeQuestionResponse.hasOwnProperty("err")) {
+          console.warn("error on start game", makeQuestionResponse.err.err);
         }
       } else {
         console.warn("unknown type of received message");
@@ -280,6 +301,37 @@ class WebSocketService {
       requestId,
       "failed to send choose main player request"
     );
+    this.sendMessageBytes(buffer);
+  }
+
+  sendMakeQuestion(authData, question, answerOptions, rightAnswerIdx) {
+    let requestId = this.generateRandomCode();
+
+    let filteredOptions = [];
+
+    let nullsBeforeRightAnswerIdx = 0;
+    for (let i = 0; i < answerOptions.length; i++) {
+      if (answerOptions[i] !== null) {
+        filteredOptions.push(answerOptions[i]);
+      } else if (i < rightAnswerIdx) {
+        nullsBeforeRightAnswerIdx++;
+      } else if (i === rightAnswerIdx) {
+        console.error("right answer is null");
+      }
+    }
+    rightAnswerIdx -= nullsBeforeRightAnswerIdx;
+
+    const requestPayload = {
+      makeQuestion: {
+        authData: authData,
+        requestId: requestId,
+        question: question,
+        answerOptions: filteredOptions,
+        rightAnswerIdx: rightAnswerIdx,
+      },
+    };
+    const buffer = RootRequest.encode(requestPayload).finish();
+    this.addTimeoutMessage(requestId, "failed to send make question request");
     this.sendMessageBytes(buffer);
   }
 

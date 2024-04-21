@@ -5,11 +5,13 @@ export const ActionType = {
   GO_START_PAGE: "GO_START_PAGE",
   SET_GAMESTATE: "SET_GAMESTATE",
   SET_AUTH_DATA: "SET_AUTH_DATA",
+  SET_SELECTED_ANSWER_IDX: "SET_SELECTED_ANSWER_IDX",
 };
 
 const defaultState = {
   authData: null,
   gamestate: null,
+  selectedAnswerIdx: 0,
 };
 
 // Action creators
@@ -49,15 +51,16 @@ const rootReducer = (state, action) => {
         ...state,
         gamestate: action.gamestate,
       };
-    case ActionType.GO_START_PAGE:
-      webSocketService.stopPolling();
+    case ActionType.SET_SELECTED_ANSWER_IDX:
       return {
         ...state,
-        gamestate: null,
-        authData: null,
+        selectedAnswerIdx: action.selectedAnswerIdx,
       };
+    case ActionType.GO_START_PAGE:
+      webSocketService.stopPolling();
+      return defaultState;
     default:
-      console.warn("WTF unkown action type", action);
+      console.warn("unkown action type", action);
       return state;
   }
 };

@@ -31,7 +31,7 @@ export class ChangeName extends Component {
             placeholder="new name"
           ></input>
           <button
-            disabled={this.state.inputName === ""}
+            disabled={this.state.inputName === "" ? true : undefined}
             onClick={() => {
               console.log("change name button working");
               webSocketService.sendChangeName(

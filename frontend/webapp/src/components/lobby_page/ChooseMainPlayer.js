@@ -44,7 +44,7 @@ export class ChooseMainPlayer extends Component {
       this.props.strategyType === undefined ||
       this.props.mainPlayerId === undefined;
     return (
-      <div className="popup-trigger" disabled={!isHost ? "true" : undefined}>
+      <div className="popup-trigger" disabled={!isHost ? true : undefined}>
         <div className="popup-status-name-wrapper">
           {isRandom ? (
             <IoDiceSharp className="popup-player-icon"></IoDiceSharp>

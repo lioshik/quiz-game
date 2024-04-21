@@ -8,7 +8,9 @@ export class GamePhaseTitle extends Component {
           {this.props.text}
           {this.props.roomCode !== null ? <br></br> : null}
           {this.props.roomCode !== null ? "Room code: " : null}
-          {this.props.roomCode !== null ? <span>{this.props.roomCode}</span> : null}
+          {this.props.roomCode !== null ? (
+            <span>{this.props.roomCode}</span>
+          ) : null}
         </h2>
       </div>
     );
@@ -18,6 +20,7 @@ export class GamePhaseTitle extends Component {
 GamePhaseTitle.defaultProps = {
   text: "",
   roomCode: null,
+  timerMiliseconds: 0,
 };
 
 export default GamePhaseTitle;

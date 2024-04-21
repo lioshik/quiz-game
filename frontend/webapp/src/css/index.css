@@ -558,7 +558,7 @@ header ul {
 
 .popup-trigger:disabled,
 .popup-trigger[disabled] {
-  background-color: white;
+  background-color: rgba(221, 221, 221, 0.77);
 }
 
 .choose-main-player-widget .popup-trigger {
@@ -593,4 +593,75 @@ header ul {
 
 .start-game-widget .small-clarification-text {
   margin-top: 5px;
+}
+
+/* Styles for the radio buttons */
+input[type="radio"] {
+  transition: none;
+  /* Hide the default radio button */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Create a box for our custom radio button */
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+
+  /* Background color of the button */
+  background-color: white;
+  /* Border to make it clear where the clickable area is */
+  border: 2px solid rgb(80, 24, 81);
+  border-radius: 4px;
+
+  /* Center the radio buttons vertically */
+  vertical-align: middle;
+
+  /* Transition for smooth color change */
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Style when the radio is checked */
+input[type="radio"]:checked {
+  background-color: #5ad485;
+}
+
+/* Focus state, for accessibility */
+input[type="radio"]:focus {
+  outline-offset: 2px; /* Offset the outline a bit so it doesn't clash visually with the border */
+}
+
+.ask-question-widget input {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.right-answer-radio {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.question-input {
+  margin-bottom: 6px;
+  max-width: min(calc(100% - 31px), calc(350px - 31px));
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.ask-question-widget .options-input {
+  max-width: min(calc(100% - 31px), calc(350px - 31px));
+  margin-bottom: 1.5px;
+  width: 100%;
+}
+
+.submit-button-wrapper {
+  display: flex;
+  max-width: min(calc(100% - 31px), calc(350px - 31px));
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-button {
+  max-width: calc(200px);
+  margin-top: 20px;
 }

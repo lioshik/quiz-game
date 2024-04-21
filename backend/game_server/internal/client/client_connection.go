@@ -51,6 +51,11 @@ func (c *ClientConnection) sendMessage(m proto.Message) {
 
 func (c *ClientConnection) handleRequest(request *messages.RootRequest) {
 	slog.Info("start handling request", "request", request)
+	defer func() {
+		if r := recover(); r != nil {
+			slog.Error("RECOVER FROM PANIC", "panic_trace", r)
+		}
+	}()
 	switch request := request.Request.(type) {
 	case *messages.RootRequest_CreateRoom:
 		c.handleCreateRoom(request.CreateRoom)
