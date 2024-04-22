@@ -5,6 +5,7 @@ import (
 	"game_server/internal/client"
 	"log/slog"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -35,8 +36,11 @@ func main() {
 		Addr:              *addr,
 		ReadHeaderTimeout: 3 * time.Second,
 	}
-	clientsHub := client.NewClientsHub()
+
+	useRealTime := os.Getenv("USE_REAL_TIME")
+	clientsHub := client.NewClientsHub(useRealTime == "1")
 	go clientsHub.Run()
+
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		slog.Info("Start handling /ws")
 		serveWs(w, clientsHub, r)

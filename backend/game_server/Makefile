@@ -7,7 +7,10 @@ clean_generated_files:
 	rm -rf ./internal/gen/*;
 
 run_server: build_server
-	./game_server
+	USE_REAL_TIME=1 ./game_server
+
+run_server_debug: build_server
+	USE_REAL_TIME=0 ./game_server
 
 build_server: run_code_generation
 	go build -o game_server ./cmd/run-server/main.go
@@ -19,4 +22,4 @@ docker_run: docker_build_image
 	docker rm -f game_server_container
 	docker run -p 8080:8080 -it --name game_server_container game_server
 
-.PHONY: run_code_generation generate_protobuf clean_generated_files docker_build_image build_server docker_run
+.PHONY:  run_server run_server_debug run_code_generation generate_protobuf clean_generated_files docker_build_image build_server docker_run

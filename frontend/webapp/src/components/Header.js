@@ -13,7 +13,7 @@ export class Header extends Component {
           <li key={"guthub"}>
             <a
               className="source-wrapper"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              href="https://github.com/lioshik/quiz-game"
             >
               <FaGithub></FaGithub>
               <span>source code</span>

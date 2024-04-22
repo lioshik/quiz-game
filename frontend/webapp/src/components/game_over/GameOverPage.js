@@ -33,7 +33,7 @@ export class GameOverPage extends Component {
                     ? "Main player died"
                     : "All regular players died"
                 }
-                secondLineText={"Main player score: " + this.props.mainPlayerScore.toString()}
+                secondLineText={"Main player's score: " + this.props.mainPlayerScore.toString()}
               ></GamePhaseTitle>
             </div>
           </div>
