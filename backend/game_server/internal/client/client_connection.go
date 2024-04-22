@@ -46,11 +46,11 @@ func (c *ClientConnection) sendMessage(m proto.Message) {
 		slog.Error(err.Error())
 		return
 	}
-	slog.Info("Succesfully sended some message")
+	// slog.Info("Succesfully sended some message")
 }
 
 func (c *ClientConnection) handleRequest(request *messages.RootRequest) {
-	slog.Info("start handling request", "request", request)
+	// slog.Info("start handling request", "request", request)
 	defer func() {
 		if r := recover(); r != nil {
 			slog.Error("RECOVER FROM PANIC", "panic_trace", r)

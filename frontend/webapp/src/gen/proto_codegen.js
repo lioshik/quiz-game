@@ -149,6 +149,65 @@ $root.AuthData = (function() {
     };
 
     /**
+     * Creates an AuthData message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof AuthData
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {AuthData} AuthData
+     */
+    AuthData.fromObject = function fromObject(object) {
+        if (object instanceof $root.AuthData)
+            return object;
+        var message = new $root.AuthData();
+        if (object.roomCode != null)
+            message.roomCode = String(object.roomCode);
+        if (object.playerId != null)
+            message.playerId = String(object.playerId);
+        if (object.authToken != null)
+            message.authToken = String(object.authToken);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from an AuthData message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof AuthData
+     * @static
+     * @param {AuthData} message AuthData
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    AuthData.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.roomCode = "";
+            object.playerId = "";
+            object.authToken = "";
+        }
+        if (message.roomCode != null && message.hasOwnProperty("roomCode"))
+            object.roomCode = message.roomCode;
+        if (message.playerId != null && message.hasOwnProperty("playerId"))
+            object.playerId = message.playerId;
+        if (message.authToken != null && message.hasOwnProperty("authToken"))
+            object.authToken = message.authToken;
+        return object;
+    };
+
+    /**
+     * Converts this AuthData to JSON.
+     * @function toJSON
+     * @memberof AuthData
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    AuthData.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for AuthData
      * @function getTypeUrl
      * @memberof AuthData
@@ -365,6 +424,98 @@ $root.RootGameState = (function() {
     };
 
     /**
+     * Creates a RootGameState message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof RootGameState
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {RootGameState} RootGameState
+     */
+    RootGameState.fromObject = function fromObject(object) {
+        if (object instanceof $root.RootGameState)
+            return object;
+        var message = new $root.RootGameState();
+        if (object.lobby != null) {
+            if (typeof object.lobby !== "object")
+                throw TypeError(".RootGameState.lobby: object expected");
+            message.lobby = $root.LobbyGameState.fromObject(object.lobby);
+        }
+        if (object.waitForQuestion != null) {
+            if (typeof object.waitForQuestion !== "object")
+                throw TypeError(".RootGameState.waitForQuestion: object expected");
+            message.waitForQuestion = $root.WaitForQuestionState.fromObject(object.waitForQuestion);
+        }
+        if (object.waitForAnswer != null) {
+            if (typeof object.waitForAnswer !== "object")
+                throw TypeError(".RootGameState.waitForAnswer: object expected");
+            message.waitForAnswer = $root.WaitForAnswerState.fromObject(object.waitForAnswer);
+        }
+        if (object.waitForMainPlayer != null) {
+            if (typeof object.waitForMainPlayer !== "object")
+                throw TypeError(".RootGameState.waitForMainPlayer: object expected");
+            message.waitForMainPlayer = $root.WaitForMainPlayerState.fromObject(object.waitForMainPlayer);
+        }
+        if (object.gameOver != null) {
+            if (typeof object.gameOver !== "object")
+                throw TypeError(".RootGameState.gameOver: object expected");
+            message.gameOver = $root.GameOver.fromObject(object.gameOver);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a RootGameState message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof RootGameState
+     * @static
+     * @param {RootGameState} message RootGameState
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    RootGameState.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (message.lobby != null && message.hasOwnProperty("lobby")) {
+            object.lobby = $root.LobbyGameState.toObject(message.lobby, options);
+            if (options.oneofs)
+                object.state = "lobby";
+        }
+        if (message.waitForQuestion != null && message.hasOwnProperty("waitForQuestion")) {
+            object.waitForQuestion = $root.WaitForQuestionState.toObject(message.waitForQuestion, options);
+            if (options.oneofs)
+                object.state = "waitForQuestion";
+        }
+        if (message.waitForAnswer != null && message.hasOwnProperty("waitForAnswer")) {
+            object.waitForAnswer = $root.WaitForAnswerState.toObject(message.waitForAnswer, options);
+            if (options.oneofs)
+                object.state = "waitForAnswer";
+        }
+        if (message.waitForMainPlayer != null && message.hasOwnProperty("waitForMainPlayer")) {
+            object.waitForMainPlayer = $root.WaitForMainPlayerState.toObject(message.waitForMainPlayer, options);
+            if (options.oneofs)
+                object.state = "waitForMainPlayer";
+        }
+        if (message.gameOver != null && message.hasOwnProperty("gameOver")) {
+            object.gameOver = $root.GameOver.toObject(message.gameOver, options);
+            if (options.oneofs)
+                object.state = "gameOver";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this RootGameState to JSON.
+     * @function toJSON
+     * @memberof RootGameState
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    RootGameState.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for RootGameState
      * @function getTypeUrl
      * @memberof RootGameState
@@ -567,6 +718,93 @@ $root.Player = (function() {
     };
 
     /**
+     * Creates a Player message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof Player
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {Player} Player
+     */
+    Player.fromObject = function fromObject(object) {
+        if (object instanceof $root.Player)
+            return object;
+        var message = new $root.Player();
+        if (object.playerId != null)
+            message.playerId = String(object.playerId);
+        if (object.playerName != null)
+            message.playerName = String(object.playerName);
+        switch (object.playerType) {
+        default:
+            if (typeof object.playerType === "number") {
+                message.playerType = object.playerType;
+                break;
+            }
+            break;
+        case "Participant":
+        case 0:
+            message.playerType = 0;
+            break;
+        case "MainPlayer":
+        case 1:
+            message.playerType = 1;
+            break;
+        case "Host":
+        case 2:
+            message.playerType = 2;
+            break;
+        }
+        if (object.answerGiven != null)
+            message.answerGiven = Boolean(object.answerGiven);
+        if (object.stillAlive != null)
+            message.stillAlive = Boolean(object.stillAlive);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a Player message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof Player
+     * @static
+     * @param {Player} message Player
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    Player.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.playerId = "";
+            object.playerName = "";
+            object.playerType = options.enums === String ? "Participant" : 0;
+            object.answerGiven = false;
+            object.stillAlive = false;
+        }
+        if (message.playerId != null && message.hasOwnProperty("playerId"))
+            object.playerId = message.playerId;
+        if (message.playerName != null && message.hasOwnProperty("playerName"))
+            object.playerName = message.playerName;
+        if (message.playerType != null && message.hasOwnProperty("playerType"))
+            object.playerType = options.enums === String ? $root.PlayerType[message.playerType] === undefined ? message.playerType : $root.PlayerType[message.playerType] : message.playerType;
+        if (message.answerGiven != null && message.hasOwnProperty("answerGiven"))
+            object.answerGiven = message.answerGiven;
+        if (message.stillAlive != null && message.hasOwnProperty("stillAlive"))
+            object.stillAlive = message.stillAlive;
+        return object;
+    };
+
+    /**
+     * Converts this Player to JSON.
+     * @function toJSON
+     * @memberof Player
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    Player.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for Player
      * @function getTypeUrl
      * @memberof Player
@@ -754,6 +992,101 @@ $root.RunningGamePlayersInfo = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a RunningGamePlayersInfo message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof RunningGamePlayersInfo
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {RunningGamePlayersInfo} RunningGamePlayersInfo
+     */
+    RunningGamePlayersInfo.fromObject = function fromObject(object) {
+        if (object instanceof $root.RunningGamePlayersInfo)
+            return object;
+        var message = new $root.RunningGamePlayersInfo();
+        if (object.players) {
+            if (!Array.isArray(object.players))
+                throw TypeError(".RunningGamePlayersInfo.players: array expected");
+            message.players = [];
+            for (var i = 0; i < object.players.length; ++i) {
+                if (typeof object.players[i] !== "object")
+                    throw TypeError(".RunningGamePlayersInfo.players: object expected");
+                message.players[i] = $root.Player.fromObject(object.players[i]);
+            }
+        }
+        if (object.mainPlayerScore != null)
+            if ($util.Long)
+                (message.mainPlayerScore = $util.Long.fromValue(object.mainPlayerScore)).unsigned = false;
+            else if (typeof object.mainPlayerScore === "string")
+                message.mainPlayerScore = parseInt(object.mainPlayerScore, 10);
+            else if (typeof object.mainPlayerScore === "number")
+                message.mainPlayerScore = object.mainPlayerScore;
+            else if (typeof object.mainPlayerScore === "object")
+                message.mainPlayerScore = new $util.LongBits(object.mainPlayerScore.low >>> 0, object.mainPlayerScore.high >>> 0).toNumber();
+        if (object.hintSkipQuestionAvailable != null)
+            message.hintSkipQuestionAvailable = Boolean(object.hintSkipQuestionAvailable);
+        if (object.hintMajorityOpinionAvailable != null)
+            message.hintMajorityOpinionAvailable = Boolean(object.hintMajorityOpinionAvailable);
+        if (object.hintTwoOpinionsAvailable != null)
+            message.hintTwoOpinionsAvailable = Boolean(object.hintTwoOpinionsAvailable);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a RunningGamePlayersInfo message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof RunningGamePlayersInfo
+     * @static
+     * @param {RunningGamePlayersInfo} message RunningGamePlayersInfo
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    RunningGamePlayersInfo.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.players = [];
+        if (options.defaults) {
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.mainPlayerScore = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.mainPlayerScore = options.longs === String ? "0" : 0;
+            object.hintSkipQuestionAvailable = false;
+            object.hintMajorityOpinionAvailable = false;
+            object.hintTwoOpinionsAvailable = false;
+        }
+        if (message.players && message.players.length) {
+            object.players = [];
+            for (var j = 0; j < message.players.length; ++j)
+                object.players[j] = $root.Player.toObject(message.players[j], options);
+        }
+        if (message.mainPlayerScore != null && message.hasOwnProperty("mainPlayerScore"))
+            if (typeof message.mainPlayerScore === "number")
+                object.mainPlayerScore = options.longs === String ? String(message.mainPlayerScore) : message.mainPlayerScore;
+            else
+                object.mainPlayerScore = options.longs === String ? $util.Long.prototype.toString.call(message.mainPlayerScore) : options.longs === Number ? new $util.LongBits(message.mainPlayerScore.low >>> 0, message.mainPlayerScore.high >>> 0).toNumber() : message.mainPlayerScore;
+        if (message.hintSkipQuestionAvailable != null && message.hasOwnProperty("hintSkipQuestionAvailable"))
+            object.hintSkipQuestionAvailable = message.hintSkipQuestionAvailable;
+        if (message.hintMajorityOpinionAvailable != null && message.hasOwnProperty("hintMajorityOpinionAvailable"))
+            object.hintMajorityOpinionAvailable = message.hintMajorityOpinionAvailable;
+        if (message.hintTwoOpinionsAvailable != null && message.hasOwnProperty("hintTwoOpinionsAvailable"))
+            object.hintTwoOpinionsAvailable = message.hintTwoOpinionsAvailable;
+        return object;
+    };
+
+    /**
+     * Converts this RunningGamePlayersInfo to JSON.
+     * @function toJSON
+     * @memberof RunningGamePlayersInfo
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    RunningGamePlayersInfo.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -945,6 +1278,92 @@ $root.LobbyGameState = (function() {
     };
 
     /**
+     * Creates a LobbyGameState message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof LobbyGameState
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {LobbyGameState} LobbyGameState
+     */
+    LobbyGameState.fromObject = function fromObject(object) {
+        if (object instanceof $root.LobbyGameState)
+            return object;
+        var message = new $root.LobbyGameState();
+        if (object.players) {
+            if (!Array.isArray(object.players))
+                throw TypeError(".LobbyGameState.players: array expected");
+            message.players = [];
+            for (var i = 0; i < object.players.length; ++i) {
+                if (typeof object.players[i] !== "object")
+                    throw TypeError(".LobbyGameState.players: object expected");
+                message.players[i] = $root.Player.fromObject(object.players[i]);
+            }
+        }
+        switch (object.chooseMainPlayerStrategy) {
+        default:
+            if (typeof object.chooseMainPlayerStrategy === "number") {
+                message.chooseMainPlayerStrategy = object.chooseMainPlayerStrategy;
+                break;
+            }
+            break;
+        case "Random":
+        case 0:
+            message.chooseMainPlayerStrategy = 0;
+            break;
+        case "Specific":
+        case 1:
+            message.chooseMainPlayerStrategy = 1;
+            break;
+        }
+        if (object.mainPlayerId != null)
+            message.mainPlayerId = String(object.mainPlayerId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a LobbyGameState message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof LobbyGameState
+     * @static
+     * @param {LobbyGameState} message LobbyGameState
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    LobbyGameState.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.players = [];
+        if (options.defaults)
+            object.chooseMainPlayerStrategy = options.enums === String ? "Random" : 0;
+        if (message.players && message.players.length) {
+            object.players = [];
+            for (var j = 0; j < message.players.length; ++j)
+                object.players[j] = $root.Player.toObject(message.players[j], options);
+        }
+        if (message.chooseMainPlayerStrategy != null && message.hasOwnProperty("chooseMainPlayerStrategy"))
+            object.chooseMainPlayerStrategy = options.enums === String ? $root.ChooseMainPlayerStrategy[message.chooseMainPlayerStrategy] === undefined ? message.chooseMainPlayerStrategy : $root.ChooseMainPlayerStrategy[message.chooseMainPlayerStrategy] : message.chooseMainPlayerStrategy;
+        if (message.mainPlayerId != null && message.hasOwnProperty("mainPlayerId")) {
+            object.mainPlayerId = message.mainPlayerId;
+            if (options.oneofs)
+                object._mainPlayerId = "mainPlayerId";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this LobbyGameState to JSON.
+     * @function toJSON
+     * @memberof LobbyGameState
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    LobbyGameState.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for LobbyGameState
      * @function getTypeUrl
      * @memberof LobbyGameState
@@ -1068,6 +1487,57 @@ $root.WaitForQuestionState = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a WaitForQuestionState message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof WaitForQuestionState
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {WaitForQuestionState} WaitForQuestionState
+     */
+    WaitForQuestionState.fromObject = function fromObject(object) {
+        if (object instanceof $root.WaitForQuestionState)
+            return object;
+        var message = new $root.WaitForQuestionState();
+        if (object.playersInfo != null) {
+            if (typeof object.playersInfo !== "object")
+                throw TypeError(".WaitForQuestionState.playersInfo: object expected");
+            message.playersInfo = $root.RunningGamePlayersInfo.fromObject(object.playersInfo);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a WaitForQuestionState message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof WaitForQuestionState
+     * @static
+     * @param {WaitForQuestionState} message WaitForQuestionState
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    WaitForQuestionState.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.playersInfo = null;
+        if (message.playersInfo != null && message.hasOwnProperty("playersInfo"))
+            object.playersInfo = $root.RunningGamePlayersInfo.toObject(message.playersInfo, options);
+        return object;
+    };
+
+    /**
+     * Converts this WaitForQuestionState to JSON.
+     * @function toJSON
+     * @memberof WaitForQuestionState
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    WaitForQuestionState.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -1213,6 +1683,68 @@ $root.QuestionInfo = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a QuestionInfo message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof QuestionInfo
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {QuestionInfo} QuestionInfo
+     */
+    QuestionInfo.fromObject = function fromObject(object) {
+        if (object instanceof $root.QuestionInfo)
+            return object;
+        var message = new $root.QuestionInfo();
+        if (object.question != null)
+            message.question = String(object.question);
+        if (object.answerOptions) {
+            if (!Array.isArray(object.answerOptions))
+                throw TypeError(".QuestionInfo.answerOptions: array expected");
+            message.answerOptions = [];
+            for (var i = 0; i < object.answerOptions.length; ++i)
+                message.answerOptions[i] = String(object.answerOptions[i]);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a QuestionInfo message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof QuestionInfo
+     * @static
+     * @param {QuestionInfo} message QuestionInfo
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    QuestionInfo.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.answerOptions = [];
+        if (options.defaults)
+            object.question = "";
+        if (message.question != null && message.hasOwnProperty("question"))
+            object.question = message.question;
+        if (message.answerOptions && message.answerOptions.length) {
+            object.answerOptions = [];
+            for (var j = 0; j < message.answerOptions.length; ++j)
+                object.answerOptions[j] = message.answerOptions[j];
+        }
+        return object;
+    };
+
+    /**
+     * Converts this QuestionInfo to JSON.
+     * @function toJSON
+     * @memberof QuestionInfo
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    QuestionInfo.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -1372,6 +1904,85 @@ $root.WaitForAnswerState = (function() {
     };
 
     /**
+     * Creates a WaitForAnswerState message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof WaitForAnswerState
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {WaitForAnswerState} WaitForAnswerState
+     */
+    WaitForAnswerState.fromObject = function fromObject(object) {
+        if (object instanceof $root.WaitForAnswerState)
+            return object;
+        var message = new $root.WaitForAnswerState();
+        if (object.playersInfo != null) {
+            if (typeof object.playersInfo !== "object")
+                throw TypeError(".WaitForAnswerState.playersInfo: object expected");
+            message.playersInfo = $root.RunningGamePlayersInfo.fromObject(object.playersInfo);
+        }
+        if (object.questionInfo != null) {
+            if (typeof object.questionInfo !== "object")
+                throw TypeError(".WaitForAnswerState.questionInfo: object expected");
+            message.questionInfo = $root.QuestionInfo.fromObject(object.questionInfo);
+        }
+        if (object.milisecondsLeft != null)
+            if ($util.Long)
+                (message.milisecondsLeft = $util.Long.fromValue(object.milisecondsLeft)).unsigned = true;
+            else if (typeof object.milisecondsLeft === "string")
+                message.milisecondsLeft = parseInt(object.milisecondsLeft, 10);
+            else if (typeof object.milisecondsLeft === "number")
+                message.milisecondsLeft = object.milisecondsLeft;
+            else if (typeof object.milisecondsLeft === "object")
+                message.milisecondsLeft = new $util.LongBits(object.milisecondsLeft.low >>> 0, object.milisecondsLeft.high >>> 0).toNumber(true);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a WaitForAnswerState message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof WaitForAnswerState
+     * @static
+     * @param {WaitForAnswerState} message WaitForAnswerState
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    WaitForAnswerState.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.playersInfo = null;
+            object.questionInfo = null;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.milisecondsLeft = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.milisecondsLeft = options.longs === String ? "0" : 0;
+        }
+        if (message.playersInfo != null && message.hasOwnProperty("playersInfo"))
+            object.playersInfo = $root.RunningGamePlayersInfo.toObject(message.playersInfo, options);
+        if (message.questionInfo != null && message.hasOwnProperty("questionInfo"))
+            object.questionInfo = $root.QuestionInfo.toObject(message.questionInfo, options);
+        if (message.milisecondsLeft != null && message.hasOwnProperty("milisecondsLeft"))
+            if (typeof message.milisecondsLeft === "number")
+                object.milisecondsLeft = options.longs === String ? String(message.milisecondsLeft) : message.milisecondsLeft;
+            else
+                object.milisecondsLeft = options.longs === String ? $util.Long.prototype.toString.call(message.milisecondsLeft) : options.longs === Number ? new $util.LongBits(message.milisecondsLeft.low >>> 0, message.milisecondsLeft.high >>> 0).toNumber(true) : message.milisecondsLeft;
+        return object;
+    };
+
+    /**
+     * Converts this WaitForAnswerState to JSON.
+     * @function toJSON
+     * @memberof WaitForAnswerState
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    WaitForAnswerState.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for WaitForAnswerState
      * @function getTypeUrl
      * @memberof WaitForAnswerState
@@ -1510,6 +2121,60 @@ $root.SpoiledAnswer = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a SpoiledAnswer message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SpoiledAnswer
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SpoiledAnswer} SpoiledAnswer
+     */
+    SpoiledAnswer.fromObject = function fromObject(object) {
+        if (object instanceof $root.SpoiledAnswer)
+            return object;
+        var message = new $root.SpoiledAnswer();
+        if (object.playerId != null)
+            message.playerId = String(object.playerId);
+        if (object.answerIdx != null)
+            message.answerIdx = object.answerIdx >>> 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a SpoiledAnswer message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SpoiledAnswer
+     * @static
+     * @param {SpoiledAnswer} message SpoiledAnswer
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SpoiledAnswer.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.playerId = "";
+            object.answerIdx = 0;
+        }
+        if (message.playerId != null && message.hasOwnProperty("playerId"))
+            object.playerId = message.playerId;
+        if (message.answerIdx != null && message.hasOwnProperty("answerIdx"))
+            object.answerIdx = message.answerIdx;
+        return object;
+    };
+
+    /**
+     * Converts this SpoiledAnswer to JSON.
+     * @function toJSON
+     * @memberof SpoiledAnswer
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SpoiledAnswer.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -1673,6 +2338,83 @@ $root.WaitForMainPlayerState = (function() {
     };
 
     /**
+     * Creates a WaitForMainPlayerState message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof WaitForMainPlayerState
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {WaitForMainPlayerState} WaitForMainPlayerState
+     */
+    WaitForMainPlayerState.fromObject = function fromObject(object) {
+        if (object instanceof $root.WaitForMainPlayerState)
+            return object;
+        var message = new $root.WaitForMainPlayerState();
+        if (object.playersInfo != null) {
+            if (typeof object.playersInfo !== "object")
+                throw TypeError(".WaitForMainPlayerState.playersInfo: object expected");
+            message.playersInfo = $root.RunningGamePlayersInfo.fromObject(object.playersInfo);
+        }
+        if (object.questionInfo != null) {
+            if (typeof object.questionInfo !== "object")
+                throw TypeError(".WaitForMainPlayerState.questionInfo: object expected");
+            message.questionInfo = $root.QuestionInfo.fromObject(object.questionInfo);
+        }
+        if (object.spoiledAnswers) {
+            if (!Array.isArray(object.spoiledAnswers))
+                throw TypeError(".WaitForMainPlayerState.spoiledAnswers: array expected");
+            message.spoiledAnswers = [];
+            for (var i = 0; i < object.spoiledAnswers.length; ++i) {
+                if (typeof object.spoiledAnswers[i] !== "object")
+                    throw TypeError(".WaitForMainPlayerState.spoiledAnswers: object expected");
+                message.spoiledAnswers[i] = $root.SpoiledAnswer.fromObject(object.spoiledAnswers[i]);
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a WaitForMainPlayerState message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof WaitForMainPlayerState
+     * @static
+     * @param {WaitForMainPlayerState} message WaitForMainPlayerState
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    WaitForMainPlayerState.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.spoiledAnswers = [];
+        if (options.defaults) {
+            object.playersInfo = null;
+            object.questionInfo = null;
+        }
+        if (message.playersInfo != null && message.hasOwnProperty("playersInfo"))
+            object.playersInfo = $root.RunningGamePlayersInfo.toObject(message.playersInfo, options);
+        if (message.questionInfo != null && message.hasOwnProperty("questionInfo"))
+            object.questionInfo = $root.QuestionInfo.toObject(message.questionInfo, options);
+        if (message.spoiledAnswers && message.spoiledAnswers.length) {
+            object.spoiledAnswers = [];
+            for (var j = 0; j < message.spoiledAnswers.length; ++j)
+                object.spoiledAnswers[j] = $root.SpoiledAnswer.toObject(message.spoiledAnswers[j], options);
+        }
+        return object;
+    };
+
+    /**
+     * Converts this WaitForMainPlayerState to JSON.
+     * @function toJSON
+     * @memberof WaitForMainPlayerState
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    WaitForMainPlayerState.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for WaitForMainPlayerState
      * @function getTypeUrl
      * @memberof WaitForMainPlayerState
@@ -1781,6 +2523,44 @@ $root.GameOver = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GameOver message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GameOver
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GameOver} GameOver
+     */
+    GameOver.fromObject = function fromObject(object) {
+        if (object instanceof $root.GameOver)
+            return object;
+        return new $root.GameOver();
+    };
+
+    /**
+     * Creates a plain object from a GameOver message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GameOver
+     * @static
+     * @param {GameOver} message GameOver
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GameOver.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this GameOver to JSON.
+     * @function toJSON
+     * @memberof GameOver
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GameOver.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -1907,6 +2687,57 @@ $root.GameStateNotification = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GameStateNotification message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GameStateNotification
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GameStateNotification} GameStateNotification
+     */
+    GameStateNotification.fromObject = function fromObject(object) {
+        if (object instanceof $root.GameStateNotification)
+            return object;
+        var message = new $root.GameStateNotification();
+        if (object.gamestate != null) {
+            if (typeof object.gamestate !== "object")
+                throw TypeError(".GameStateNotification.gamestate: object expected");
+            message.gamestate = $root.RootGameState.fromObject(object.gamestate);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GameStateNotification message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GameStateNotification
+     * @static
+     * @param {GameStateNotification} message GameStateNotification
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GameStateNotification.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.gamestate = null;
+        if (message.gamestate != null && message.hasOwnProperty("gamestate"))
+            object.gamestate = $root.RootGameState.toObject(message.gamestate, options);
+        return object;
+    };
+
+    /**
+     * Converts this GameStateNotification to JSON.
+     * @function toJSON
+     * @memberof GameStateNotification
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GameStateNotification.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -2170,6 +3001,138 @@ $root.RootRequest = (function() {
     };
 
     /**
+     * Creates a RootRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof RootRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {RootRequest} RootRequest
+     */
+    RootRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.RootRequest)
+            return object;
+        var message = new $root.RootRequest();
+        if (object.createRoom != null) {
+            if (typeof object.createRoom !== "object")
+                throw TypeError(".RootRequest.createRoom: object expected");
+            message.createRoom = $root.CreateRoomRequest.fromObject(object.createRoom);
+        }
+        if (object.joinRoom != null) {
+            if (typeof object.joinRoom !== "object")
+                throw TypeError(".RootRequest.joinRoom: object expected");
+            message.joinRoom = $root.JoinRoomRequest.fromObject(object.joinRoom);
+        }
+        if (object.changeName != null) {
+            if (typeof object.changeName !== "object")
+                throw TypeError(".RootRequest.changeName: object expected");
+            message.changeName = $root.ChangeNameRequest.fromObject(object.changeName);
+        }
+        if (object.chooseMainPlayer != null) {
+            if (typeof object.chooseMainPlayer !== "object")
+                throw TypeError(".RootRequest.chooseMainPlayer: object expected");
+            message.chooseMainPlayer = $root.ChooseMainPlayerRequest.fromObject(object.chooseMainPlayer);
+        }
+        if (object.startGame != null) {
+            if (typeof object.startGame !== "object")
+                throw TypeError(".RootRequest.startGame: object expected");
+            message.startGame = $root.StartGameRequest.fromObject(object.startGame);
+        }
+        if (object.makeQuestion != null) {
+            if (typeof object.makeQuestion !== "object")
+                throw TypeError(".RootRequest.makeQuestion: object expected");
+            message.makeQuestion = $root.MakeQuestionRequest.fromObject(object.makeQuestion);
+        }
+        if (object.giveAnswer != null) {
+            if (typeof object.giveAnswer !== "object")
+                throw TypeError(".RootRequest.giveAnswer: object expected");
+            message.giveAnswer = $root.GiveAnswerRequest.fromObject(object.giveAnswer);
+        }
+        if (object.getGameState != null) {
+            if (typeof object.getGameState !== "object")
+                throw TypeError(".RootRequest.getGameState: object expected");
+            message.getGameState = $root.GetGameStateRequest.fromObject(object.getGameState);
+        }
+        if (object.skipTime != null) {
+            if (typeof object.skipTime !== "object")
+                throw TypeError(".RootRequest.skipTime: object expected");
+            message.skipTime = $root.SkipTimeRequest.fromObject(object.skipTime);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a RootRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof RootRequest
+     * @static
+     * @param {RootRequest} message RootRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    RootRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (message.createRoom != null && message.hasOwnProperty("createRoom")) {
+            object.createRoom = $root.CreateRoomRequest.toObject(message.createRoom, options);
+            if (options.oneofs)
+                object.request = "createRoom";
+        }
+        if (message.joinRoom != null && message.hasOwnProperty("joinRoom")) {
+            object.joinRoom = $root.JoinRoomRequest.toObject(message.joinRoom, options);
+            if (options.oneofs)
+                object.request = "joinRoom";
+        }
+        if (message.changeName != null && message.hasOwnProperty("changeName")) {
+            object.changeName = $root.ChangeNameRequest.toObject(message.changeName, options);
+            if (options.oneofs)
+                object.request = "changeName";
+        }
+        if (message.chooseMainPlayer != null && message.hasOwnProperty("chooseMainPlayer")) {
+            object.chooseMainPlayer = $root.ChooseMainPlayerRequest.toObject(message.chooseMainPlayer, options);
+            if (options.oneofs)
+                object.request = "chooseMainPlayer";
+        }
+        if (message.startGame != null && message.hasOwnProperty("startGame")) {
+            object.startGame = $root.StartGameRequest.toObject(message.startGame, options);
+            if (options.oneofs)
+                object.request = "startGame";
+        }
+        if (message.makeQuestion != null && message.hasOwnProperty("makeQuestion")) {
+            object.makeQuestion = $root.MakeQuestionRequest.toObject(message.makeQuestion, options);
+            if (options.oneofs)
+                object.request = "makeQuestion";
+        }
+        if (message.giveAnswer != null && message.hasOwnProperty("giveAnswer")) {
+            object.giveAnswer = $root.GiveAnswerRequest.toObject(message.giveAnswer, options);
+            if (options.oneofs)
+                object.request = "giveAnswer";
+        }
+        if (message.getGameState != null && message.hasOwnProperty("getGameState")) {
+            object.getGameState = $root.GetGameStateRequest.toObject(message.getGameState, options);
+            if (options.oneofs)
+                object.request = "getGameState";
+        }
+        if (message.skipTime != null && message.hasOwnProperty("skipTime")) {
+            object.skipTime = $root.SkipTimeRequest.toObject(message.skipTime, options);
+            if (options.oneofs)
+                object.request = "skipTime";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this RootRequest to JSON.
+     * @function toJSON
+     * @memberof RootRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    RootRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for RootRequest
      * @function getTypeUrl
      * @memberof RootRequest
@@ -2293,6 +3256,54 @@ $root.CreateRoomRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a CreateRoomRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CreateRoomRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CreateRoomRequest} CreateRoomRequest
+     */
+    CreateRoomRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.CreateRoomRequest)
+            return object;
+        var message = new $root.CreateRoomRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CreateRoomRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CreateRoomRequest
+     * @static
+     * @param {CreateRoomRequest} message CreateRoomRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CreateRoomRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        return object;
+    };
+
+    /**
+     * Converts this CreateRoomRequest to JSON.
+     * @function toJSON
+     * @memberof CreateRoomRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CreateRoomRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -2434,6 +3445,60 @@ $root.JoinRoomRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a JoinRoomRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof JoinRoomRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {JoinRoomRequest} JoinRoomRequest
+     */
+    JoinRoomRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.JoinRoomRequest)
+            return object;
+        var message = new $root.JoinRoomRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.roomCode != null)
+            message.roomCode = String(object.roomCode);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a JoinRoomRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof JoinRoomRequest
+     * @static
+     * @param {JoinRoomRequest} message JoinRoomRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    JoinRoomRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.roomCode = "";
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.roomCode != null && message.hasOwnProperty("roomCode"))
+            object.roomCode = message.roomCode;
+        return object;
+    };
+
+    /**
+     * Converts this JoinRoomRequest to JSON.
+     * @function toJSON
+     * @memberof JoinRoomRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    JoinRoomRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -2590,6 +3655,68 @@ $root.ChangeNameRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a ChangeNameRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChangeNameRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChangeNameRequest} ChangeNameRequest
+     */
+    ChangeNameRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChangeNameRequest)
+            return object;
+        var message = new $root.ChangeNameRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".ChangeNameRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        if (object.newName != null)
+            message.newName = String(object.newName);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChangeNameRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChangeNameRequest
+     * @static
+     * @param {ChangeNameRequest} message ChangeNameRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChangeNameRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+            object.newName = "";
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        if (message.newName != null && message.hasOwnProperty("newName"))
+            object.newName = message.newName;
+        return object;
+    };
+
+    /**
+     * Converts this ChangeNameRequest to JSON.
+     * @function toJSON
+     * @memberof ChangeNameRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChangeNameRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -2778,6 +3905,77 @@ $root.ChooseMainPlayerRequest = (function() {
     };
 
     /**
+     * Creates a ChooseMainPlayerRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChooseMainPlayerRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChooseMainPlayerRequest} ChooseMainPlayerRequest
+     */
+    ChooseMainPlayerRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChooseMainPlayerRequest)
+            return object;
+        var message = new $root.ChooseMainPlayerRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".ChooseMainPlayerRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        if (object.random != null)
+            message.random = Boolean(object.random);
+        if (object.specificPlayerId != null)
+            message.specificPlayerId = String(object.specificPlayerId);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChooseMainPlayerRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChooseMainPlayerRequest
+     * @static
+     * @param {ChooseMainPlayerRequest} message ChooseMainPlayerRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChooseMainPlayerRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        if (message.random != null && message.hasOwnProperty("random")) {
+            object.random = message.random;
+            if (options.oneofs)
+                object.choiceStrategy = "random";
+        }
+        if (message.specificPlayerId != null && message.hasOwnProperty("specificPlayerId")) {
+            object.specificPlayerId = message.specificPlayerId;
+            if (options.oneofs)
+                object.choiceStrategy = "specificPlayerId";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this ChooseMainPlayerRequest to JSON.
+     * @function toJSON
+     * @memberof ChooseMainPlayerRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChooseMainPlayerRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for ChooseMainPlayerRequest
      * @function getTypeUrl
      * @memberof ChooseMainPlayerRequest
@@ -2916,6 +4114,63 @@ $root.StartGameRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a StartGameRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof StartGameRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {StartGameRequest} StartGameRequest
+     */
+    StartGameRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.StartGameRequest)
+            return object;
+        var message = new $root.StartGameRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".StartGameRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a StartGameRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof StartGameRequest
+     * @static
+     * @param {StartGameRequest} message StartGameRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    StartGameRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        return object;
+    };
+
+    /**
+     * Converts this StartGameRequest to JSON.
+     * @function toJSON
+     * @memberof StartGameRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    StartGameRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -3109,6 +4364,87 @@ $root.MakeQuestionRequest = (function() {
     };
 
     /**
+     * Creates a MakeQuestionRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MakeQuestionRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MakeQuestionRequest} MakeQuestionRequest
+     */
+    MakeQuestionRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.MakeQuestionRequest)
+            return object;
+        var message = new $root.MakeQuestionRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".MakeQuestionRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        if (object.question != null)
+            message.question = String(object.question);
+        if (object.answerOptions) {
+            if (!Array.isArray(object.answerOptions))
+                throw TypeError(".MakeQuestionRequest.answerOptions: array expected");
+            message.answerOptions = [];
+            for (var i = 0; i < object.answerOptions.length; ++i)
+                message.answerOptions[i] = String(object.answerOptions[i]);
+        }
+        if (object.rightAnswerIdx != null)
+            message.rightAnswerIdx = object.rightAnswerIdx | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MakeQuestionRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MakeQuestionRequest
+     * @static
+     * @param {MakeQuestionRequest} message MakeQuestionRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MakeQuestionRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.answerOptions = [];
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+            object.question = "";
+            object.rightAnswerIdx = 0;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        if (message.question != null && message.hasOwnProperty("question"))
+            object.question = message.question;
+        if (message.answerOptions && message.answerOptions.length) {
+            object.answerOptions = [];
+            for (var j = 0; j < message.answerOptions.length; ++j)
+                object.answerOptions[j] = message.answerOptions[j];
+        }
+        if (message.rightAnswerIdx != null && message.hasOwnProperty("rightAnswerIdx"))
+            object.rightAnswerIdx = message.rightAnswerIdx;
+        return object;
+    };
+
+    /**
+     * Converts this MakeQuestionRequest to JSON.
+     * @function toJSON
+     * @memberof MakeQuestionRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MakeQuestionRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for MakeQuestionRequest
      * @function getTypeUrl
      * @memberof MakeQuestionRequest
@@ -3294,6 +4630,95 @@ $root.GiveAnswerRequest = (function() {
     };
 
     /**
+     * Creates a GiveAnswerRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GiveAnswerRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GiveAnswerRequest} GiveAnswerRequest
+     */
+    GiveAnswerRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.GiveAnswerRequest)
+            return object;
+        var message = new $root.GiveAnswerRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".GiveAnswerRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        if (object.answerIdx != null)
+            message.answerIdx = object.answerIdx | 0;
+        switch (object.hint) {
+        default:
+            if (typeof object.hint === "number") {
+                message.hint = object.hint;
+                break;
+            }
+            break;
+        case "SkipQuestion":
+        case 0:
+            message.hint = 0;
+            break;
+        case "MajorityOpinion":
+        case 1:
+            message.hint = 1;
+            break;
+        case "TwoOpinions":
+        case 2:
+            message.hint = 2;
+            break;
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GiveAnswerRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GiveAnswerRequest
+     * @static
+     * @param {GiveAnswerRequest} message GiveAnswerRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GiveAnswerRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        if (message.answerIdx != null && message.hasOwnProperty("answerIdx")) {
+            object.answerIdx = message.answerIdx;
+            if (options.oneofs)
+                object.answer = "answerIdx";
+        }
+        if (message.hint != null && message.hasOwnProperty("hint")) {
+            object.hint = options.enums === String ? $root.HintType[message.hint] === undefined ? message.hint : $root.HintType[message.hint] : message.hint;
+            if (options.oneofs)
+                object.answer = "hint";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this GiveAnswerRequest to JSON.
+     * @function toJSON
+     * @memberof GiveAnswerRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GiveAnswerRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for GiveAnswerRequest
      * @function getTypeUrl
      * @memberof GiveAnswerRequest
@@ -3432,6 +4857,63 @@ $root.GetGameStateRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GetGameStateRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetGameStateRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetGameStateRequest} GetGameStateRequest
+     */
+    GetGameStateRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetGameStateRequest)
+            return object;
+        var message = new $root.GetGameStateRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".GetGameStateRequest.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetGameStateRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetGameStateRequest
+     * @static
+     * @param {GetGameStateRequest} message GetGameStateRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetGameStateRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.authData = null;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        return object;
+    };
+
+    /**
+     * Converts this GetGameStateRequest to JSON.
+     * @function toJSON
+     * @memberof GetGameStateRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetGameStateRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -3588,6 +5070,79 @@ $root.SkipTimeRequest = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a SkipTimeRequest message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SkipTimeRequest
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SkipTimeRequest} SkipTimeRequest
+     */
+    SkipTimeRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.SkipTimeRequest)
+            return object;
+        var message = new $root.SkipTimeRequest();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.roomCode != null)
+            message.roomCode = String(object.roomCode);
+        if (object.miliseconds != null)
+            if ($util.Long)
+                (message.miliseconds = $util.Long.fromValue(object.miliseconds)).unsigned = true;
+            else if (typeof object.miliseconds === "string")
+                message.miliseconds = parseInt(object.miliseconds, 10);
+            else if (typeof object.miliseconds === "number")
+                message.miliseconds = object.miliseconds;
+            else if (typeof object.miliseconds === "object")
+                message.miliseconds = new $util.LongBits(object.miliseconds.low >>> 0, object.miliseconds.high >>> 0).toNumber(true);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a SkipTimeRequest message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SkipTimeRequest
+     * @static
+     * @param {SkipTimeRequest} message SkipTimeRequest
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SkipTimeRequest.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.requestId = "";
+            object.roomCode = "";
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.miliseconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.miliseconds = options.longs === String ? "0" : 0;
+        }
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.roomCode != null && message.hasOwnProperty("roomCode"))
+            object.roomCode = message.roomCode;
+        if (message.miliseconds != null && message.hasOwnProperty("miliseconds"))
+            if (typeof message.miliseconds === "number")
+                object.miliseconds = options.longs === String ? String(message.miliseconds) : message.miliseconds;
+            else
+                object.miliseconds = options.longs === String ? $util.Long.prototype.toString.call(message.miliseconds) : options.longs === Number ? new $util.LongBits(message.miliseconds.low >>> 0, message.miliseconds.high >>> 0).toNumber(true) : message.miliseconds;
+        return object;
+    };
+
+    /**
+     * Converts this SkipTimeRequest to JSON.
+     * @function toJSON
+     * @memberof SkipTimeRequest
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SkipTimeRequest.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -3866,6 +5421,148 @@ $root.RootResponse = (function() {
     };
 
     /**
+     * Creates a RootResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof RootResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {RootResponse} RootResponse
+     */
+    RootResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.RootResponse)
+            return object;
+        var message = new $root.RootResponse();
+        if (object.createRoom != null) {
+            if (typeof object.createRoom !== "object")
+                throw TypeError(".RootResponse.createRoom: object expected");
+            message.createRoom = $root.CreateRoomResponse.fromObject(object.createRoom);
+        }
+        if (object.joinRoom != null) {
+            if (typeof object.joinRoom !== "object")
+                throw TypeError(".RootResponse.joinRoom: object expected");
+            message.joinRoom = $root.JoinRoomResponse.fromObject(object.joinRoom);
+        }
+        if (object.changeName != null) {
+            if (typeof object.changeName !== "object")
+                throw TypeError(".RootResponse.changeName: object expected");
+            message.changeName = $root.ChangeNameResponse.fromObject(object.changeName);
+        }
+        if (object.chooseMainPlayer != null) {
+            if (typeof object.chooseMainPlayer !== "object")
+                throw TypeError(".RootResponse.chooseMainPlayer: object expected");
+            message.chooseMainPlayer = $root.ChooseMainPlayerResponse.fromObject(object.chooseMainPlayer);
+        }
+        if (object.startGameResponse != null) {
+            if (typeof object.startGameResponse !== "object")
+                throw TypeError(".RootResponse.startGameResponse: object expected");
+            message.startGameResponse = $root.StartGameResponse.fromObject(object.startGameResponse);
+        }
+        if (object.makeQuestionResponse != null) {
+            if (typeof object.makeQuestionResponse !== "object")
+                throw TypeError(".RootResponse.makeQuestionResponse: object expected");
+            message.makeQuestionResponse = $root.MakeQuestionResponse.fromObject(object.makeQuestionResponse);
+        }
+        if (object.giveAnswerResponse != null) {
+            if (typeof object.giveAnswerResponse !== "object")
+                throw TypeError(".RootResponse.giveAnswerResponse: object expected");
+            message.giveAnswerResponse = $root.GiveAnswerResponse.fromObject(object.giveAnswerResponse);
+        }
+        if (object.getGamestateResponse != null) {
+            if (typeof object.getGamestateResponse !== "object")
+                throw TypeError(".RootResponse.getGamestateResponse: object expected");
+            message.getGamestateResponse = $root.GetGameStateResponse.fromObject(object.getGamestateResponse);
+        }
+        if (object.skipTimeResponse != null) {
+            if (typeof object.skipTimeResponse !== "object")
+                throw TypeError(".RootResponse.skipTimeResponse: object expected");
+            message.skipTimeResponse = $root.SkipTimeResponse.fromObject(object.skipTimeResponse);
+        }
+        if (object.notificationGamestate != null) {
+            if (typeof object.notificationGamestate !== "object")
+                throw TypeError(".RootResponse.notificationGamestate: object expected");
+            message.notificationGamestate = $root.GameStateNotification.fromObject(object.notificationGamestate);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a RootResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof RootResponse
+     * @static
+     * @param {RootResponse} message RootResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    RootResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (message.createRoom != null && message.hasOwnProperty("createRoom")) {
+            object.createRoom = $root.CreateRoomResponse.toObject(message.createRoom, options);
+            if (options.oneofs)
+                object.response = "createRoom";
+        }
+        if (message.joinRoom != null && message.hasOwnProperty("joinRoom")) {
+            object.joinRoom = $root.JoinRoomResponse.toObject(message.joinRoom, options);
+            if (options.oneofs)
+                object.response = "joinRoom";
+        }
+        if (message.changeName != null && message.hasOwnProperty("changeName")) {
+            object.changeName = $root.ChangeNameResponse.toObject(message.changeName, options);
+            if (options.oneofs)
+                object.response = "changeName";
+        }
+        if (message.chooseMainPlayer != null && message.hasOwnProperty("chooseMainPlayer")) {
+            object.chooseMainPlayer = $root.ChooseMainPlayerResponse.toObject(message.chooseMainPlayer, options);
+            if (options.oneofs)
+                object.response = "chooseMainPlayer";
+        }
+        if (message.startGameResponse != null && message.hasOwnProperty("startGameResponse")) {
+            object.startGameResponse = $root.StartGameResponse.toObject(message.startGameResponse, options);
+            if (options.oneofs)
+                object.response = "startGameResponse";
+        }
+        if (message.makeQuestionResponse != null && message.hasOwnProperty("makeQuestionResponse")) {
+            object.makeQuestionResponse = $root.MakeQuestionResponse.toObject(message.makeQuestionResponse, options);
+            if (options.oneofs)
+                object.response = "makeQuestionResponse";
+        }
+        if (message.giveAnswerResponse != null && message.hasOwnProperty("giveAnswerResponse")) {
+            object.giveAnswerResponse = $root.GiveAnswerResponse.toObject(message.giveAnswerResponse, options);
+            if (options.oneofs)
+                object.response = "giveAnswerResponse";
+        }
+        if (message.getGamestateResponse != null && message.hasOwnProperty("getGamestateResponse")) {
+            object.getGamestateResponse = $root.GetGameStateResponse.toObject(message.getGamestateResponse, options);
+            if (options.oneofs)
+                object.response = "getGamestateResponse";
+        }
+        if (message.skipTimeResponse != null && message.hasOwnProperty("skipTimeResponse")) {
+            object.skipTimeResponse = $root.SkipTimeResponse.toObject(message.skipTimeResponse, options);
+            if (options.oneofs)
+                object.response = "skipTimeResponse";
+        }
+        if (message.notificationGamestate != null && message.hasOwnProperty("notificationGamestate")) {
+            object.notificationGamestate = $root.GameStateNotification.toObject(message.notificationGamestate, options);
+            if (options.oneofs)
+                object.response = "notificationGamestate";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this RootResponse to JSON.
+     * @function toJSON
+     * @memberof RootResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    RootResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for RootResponse
      * @function getTypeUrl
      * @memberof RootResponse
@@ -3992,6 +5689,57 @@ $root.CreateRoomResponseOk = (function() {
     };
 
     /**
+     * Creates a CreateRoomResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CreateRoomResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CreateRoomResponseOk} CreateRoomResponseOk
+     */
+    CreateRoomResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.CreateRoomResponseOk)
+            return object;
+        var message = new $root.CreateRoomResponseOk();
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".CreateRoomResponseOk.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CreateRoomResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CreateRoomResponseOk
+     * @static
+     * @param {CreateRoomResponseOk} message CreateRoomResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CreateRoomResponseOk.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.authData = null;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        return object;
+    };
+
+    /**
+     * Converts this CreateRoomResponseOk to JSON.
+     * @function toJSON
+     * @memberof CreateRoomResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CreateRoomResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for CreateRoomResponseOk
      * @function getTypeUrl
      * @memberof CreateRoomResponseOk
@@ -4115,6 +5863,54 @@ $root.CreateRoomResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a CreateRoomResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CreateRoomResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CreateRoomResponseErr} CreateRoomResponseErr
+     */
+    CreateRoomResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.CreateRoomResponseErr)
+            return object;
+        var message = new $root.CreateRoomResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CreateRoomResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CreateRoomResponseErr
+     * @static
+     * @param {CreateRoomResponseErr} message CreateRoomResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CreateRoomResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this CreateRoomResponseErr to JSON.
+     * @function toJSON
+     * @memberof CreateRoomResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CreateRoomResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -4288,6 +6084,74 @@ $root.CreateRoomResponse = (function() {
     };
 
     /**
+     * Creates a CreateRoomResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof CreateRoomResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {CreateRoomResponse} CreateRoomResponse
+     */
+    CreateRoomResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.CreateRoomResponse)
+            return object;
+        var message = new $root.CreateRoomResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".CreateRoomResponse.ok: object expected");
+            message.ok = $root.CreateRoomResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".CreateRoomResponse.err: object expected");
+            message.err = $root.CreateRoomResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a CreateRoomResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof CreateRoomResponse
+     * @static
+     * @param {CreateRoomResponse} message CreateRoomResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    CreateRoomResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.CreateRoomResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.CreateRoomResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this CreateRoomResponse to JSON.
+     * @function toJSON
+     * @memberof CreateRoomResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    CreateRoomResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for CreateRoomResponse
      * @function getTypeUrl
      * @memberof CreateRoomResponse
@@ -4414,6 +6278,57 @@ $root.JoinRoomResponseOk = (function() {
     };
 
     /**
+     * Creates a JoinRoomResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof JoinRoomResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {JoinRoomResponseOk} JoinRoomResponseOk
+     */
+    JoinRoomResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.JoinRoomResponseOk)
+            return object;
+        var message = new $root.JoinRoomResponseOk();
+        if (object.authData != null) {
+            if (typeof object.authData !== "object")
+                throw TypeError(".JoinRoomResponseOk.authData: object expected");
+            message.authData = $root.AuthData.fromObject(object.authData);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a JoinRoomResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof JoinRoomResponseOk
+     * @static
+     * @param {JoinRoomResponseOk} message JoinRoomResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    JoinRoomResponseOk.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.authData = null;
+        if (message.authData != null && message.hasOwnProperty("authData"))
+            object.authData = $root.AuthData.toObject(message.authData, options);
+        return object;
+    };
+
+    /**
+     * Converts this JoinRoomResponseOk to JSON.
+     * @function toJSON
+     * @memberof JoinRoomResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    JoinRoomResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for JoinRoomResponseOk
      * @function getTypeUrl
      * @memberof JoinRoomResponseOk
@@ -4537,6 +6452,54 @@ $root.JoinRoomResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a JoinRoomResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof JoinRoomResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {JoinRoomResponseErr} JoinRoomResponseErr
+     */
+    JoinRoomResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.JoinRoomResponseErr)
+            return object;
+        var message = new $root.JoinRoomResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a JoinRoomResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof JoinRoomResponseErr
+     * @static
+     * @param {JoinRoomResponseErr} message JoinRoomResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    JoinRoomResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this JoinRoomResponseErr to JSON.
+     * @function toJSON
+     * @memberof JoinRoomResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    JoinRoomResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -4710,6 +6673,74 @@ $root.JoinRoomResponse = (function() {
     };
 
     /**
+     * Creates a JoinRoomResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof JoinRoomResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {JoinRoomResponse} JoinRoomResponse
+     */
+    JoinRoomResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.JoinRoomResponse)
+            return object;
+        var message = new $root.JoinRoomResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".JoinRoomResponse.ok: object expected");
+            message.ok = $root.JoinRoomResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".JoinRoomResponse.err: object expected");
+            message.err = $root.JoinRoomResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a JoinRoomResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof JoinRoomResponse
+     * @static
+     * @param {JoinRoomResponse} message JoinRoomResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    JoinRoomResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.JoinRoomResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.JoinRoomResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this JoinRoomResponse to JSON.
+     * @function toJSON
+     * @memberof JoinRoomResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    JoinRoomResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for JoinRoomResponse
      * @function getTypeUrl
      * @memberof JoinRoomResponse
@@ -4818,6 +6849,44 @@ $root.ChangeNameResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a ChangeNameResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChangeNameResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChangeNameResponseOk} ChangeNameResponseOk
+     */
+    ChangeNameResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChangeNameResponseOk)
+            return object;
+        return new $root.ChangeNameResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a ChangeNameResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChangeNameResponseOk
+     * @static
+     * @param {ChangeNameResponseOk} message ChangeNameResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChangeNameResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this ChangeNameResponseOk to JSON.
+     * @function toJSON
+     * @memberof ChangeNameResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChangeNameResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -4944,6 +7013,54 @@ $root.ChangeNameResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a ChangeNameResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChangeNameResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChangeNameResponseErr} ChangeNameResponseErr
+     */
+    ChangeNameResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChangeNameResponseErr)
+            return object;
+        var message = new $root.ChangeNameResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChangeNameResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChangeNameResponseErr
+     * @static
+     * @param {ChangeNameResponseErr} message ChangeNameResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChangeNameResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this ChangeNameResponseErr to JSON.
+     * @function toJSON
+     * @memberof ChangeNameResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChangeNameResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -5117,6 +7234,74 @@ $root.ChangeNameResponse = (function() {
     };
 
     /**
+     * Creates a ChangeNameResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChangeNameResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChangeNameResponse} ChangeNameResponse
+     */
+    ChangeNameResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChangeNameResponse)
+            return object;
+        var message = new $root.ChangeNameResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".ChangeNameResponse.ok: object expected");
+            message.ok = $root.ChangeNameResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".ChangeNameResponse.err: object expected");
+            message.err = $root.ChangeNameResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChangeNameResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChangeNameResponse
+     * @static
+     * @param {ChangeNameResponse} message ChangeNameResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChangeNameResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.ChangeNameResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.ChangeNameResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this ChangeNameResponse to JSON.
+     * @function toJSON
+     * @memberof ChangeNameResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChangeNameResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for ChangeNameResponse
      * @function getTypeUrl
      * @memberof ChangeNameResponse
@@ -5225,6 +7410,44 @@ $root.ChooseMainPlayerResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a ChooseMainPlayerResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChooseMainPlayerResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChooseMainPlayerResponseOk} ChooseMainPlayerResponseOk
+     */
+    ChooseMainPlayerResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChooseMainPlayerResponseOk)
+            return object;
+        return new $root.ChooseMainPlayerResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a ChooseMainPlayerResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChooseMainPlayerResponseOk
+     * @static
+     * @param {ChooseMainPlayerResponseOk} message ChooseMainPlayerResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChooseMainPlayerResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this ChooseMainPlayerResponseOk to JSON.
+     * @function toJSON
+     * @memberof ChooseMainPlayerResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChooseMainPlayerResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -5351,6 +7574,54 @@ $root.ChooseMainPlayerResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a ChooseMainPlayerResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChooseMainPlayerResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChooseMainPlayerResponseErr} ChooseMainPlayerResponseErr
+     */
+    ChooseMainPlayerResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChooseMainPlayerResponseErr)
+            return object;
+        var message = new $root.ChooseMainPlayerResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChooseMainPlayerResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChooseMainPlayerResponseErr
+     * @static
+     * @param {ChooseMainPlayerResponseErr} message ChooseMainPlayerResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChooseMainPlayerResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this ChooseMainPlayerResponseErr to JSON.
+     * @function toJSON
+     * @memberof ChooseMainPlayerResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChooseMainPlayerResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -5524,6 +7795,74 @@ $root.ChooseMainPlayerResponse = (function() {
     };
 
     /**
+     * Creates a ChooseMainPlayerResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof ChooseMainPlayerResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {ChooseMainPlayerResponse} ChooseMainPlayerResponse
+     */
+    ChooseMainPlayerResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.ChooseMainPlayerResponse)
+            return object;
+        var message = new $root.ChooseMainPlayerResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".ChooseMainPlayerResponse.ok: object expected");
+            message.ok = $root.ChooseMainPlayerResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".ChooseMainPlayerResponse.err: object expected");
+            message.err = $root.ChooseMainPlayerResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a ChooseMainPlayerResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof ChooseMainPlayerResponse
+     * @static
+     * @param {ChooseMainPlayerResponse} message ChooseMainPlayerResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    ChooseMainPlayerResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.ChooseMainPlayerResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.ChooseMainPlayerResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this ChooseMainPlayerResponse to JSON.
+     * @function toJSON
+     * @memberof ChooseMainPlayerResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    ChooseMainPlayerResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for ChooseMainPlayerResponse
      * @function getTypeUrl
      * @memberof ChooseMainPlayerResponse
@@ -5632,6 +7971,44 @@ $root.StartGameResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a StartGameResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof StartGameResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {StartGameResponseOk} StartGameResponseOk
+     */
+    StartGameResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.StartGameResponseOk)
+            return object;
+        return new $root.StartGameResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a StartGameResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof StartGameResponseOk
+     * @static
+     * @param {StartGameResponseOk} message StartGameResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    StartGameResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this StartGameResponseOk to JSON.
+     * @function toJSON
+     * @memberof StartGameResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    StartGameResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -5758,6 +8135,54 @@ $root.StartGameResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a StartGameResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof StartGameResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {StartGameResponseErr} StartGameResponseErr
+     */
+    StartGameResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.StartGameResponseErr)
+            return object;
+        var message = new $root.StartGameResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a StartGameResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof StartGameResponseErr
+     * @static
+     * @param {StartGameResponseErr} message StartGameResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    StartGameResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this StartGameResponseErr to JSON.
+     * @function toJSON
+     * @memberof StartGameResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    StartGameResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -5931,6 +8356,74 @@ $root.StartGameResponse = (function() {
     };
 
     /**
+     * Creates a StartGameResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof StartGameResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {StartGameResponse} StartGameResponse
+     */
+    StartGameResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.StartGameResponse)
+            return object;
+        var message = new $root.StartGameResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".StartGameResponse.ok: object expected");
+            message.ok = $root.StartGameResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".StartGameResponse.err: object expected");
+            message.err = $root.StartGameResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a StartGameResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof StartGameResponse
+     * @static
+     * @param {StartGameResponse} message StartGameResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    StartGameResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.StartGameResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.StartGameResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this StartGameResponse to JSON.
+     * @function toJSON
+     * @memberof StartGameResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    StartGameResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for StartGameResponse
      * @function getTypeUrl
      * @memberof StartGameResponse
@@ -6039,6 +8532,44 @@ $root.MakeQuestionResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a MakeQuestionResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MakeQuestionResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MakeQuestionResponseOk} MakeQuestionResponseOk
+     */
+    MakeQuestionResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.MakeQuestionResponseOk)
+            return object;
+        return new $root.MakeQuestionResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a MakeQuestionResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MakeQuestionResponseOk
+     * @static
+     * @param {MakeQuestionResponseOk} message MakeQuestionResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MakeQuestionResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this MakeQuestionResponseOk to JSON.
+     * @function toJSON
+     * @memberof MakeQuestionResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MakeQuestionResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -6165,6 +8696,54 @@ $root.MakeQuestionResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a MakeQuestionResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MakeQuestionResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MakeQuestionResponseErr} MakeQuestionResponseErr
+     */
+    MakeQuestionResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.MakeQuestionResponseErr)
+            return object;
+        var message = new $root.MakeQuestionResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MakeQuestionResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MakeQuestionResponseErr
+     * @static
+     * @param {MakeQuestionResponseErr} message MakeQuestionResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MakeQuestionResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this MakeQuestionResponseErr to JSON.
+     * @function toJSON
+     * @memberof MakeQuestionResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MakeQuestionResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -6338,6 +8917,74 @@ $root.MakeQuestionResponse = (function() {
     };
 
     /**
+     * Creates a MakeQuestionResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof MakeQuestionResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {MakeQuestionResponse} MakeQuestionResponse
+     */
+    MakeQuestionResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.MakeQuestionResponse)
+            return object;
+        var message = new $root.MakeQuestionResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".MakeQuestionResponse.ok: object expected");
+            message.ok = $root.MakeQuestionResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".MakeQuestionResponse.err: object expected");
+            message.err = $root.MakeQuestionResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a MakeQuestionResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof MakeQuestionResponse
+     * @static
+     * @param {MakeQuestionResponse} message MakeQuestionResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    MakeQuestionResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.MakeQuestionResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.MakeQuestionResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this MakeQuestionResponse to JSON.
+     * @function toJSON
+     * @memberof MakeQuestionResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    MakeQuestionResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for MakeQuestionResponse
      * @function getTypeUrl
      * @memberof MakeQuestionResponse
@@ -6446,6 +9093,44 @@ $root.GiveAnswerResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GiveAnswerResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GiveAnswerResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GiveAnswerResponseOk} GiveAnswerResponseOk
+     */
+    GiveAnswerResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.GiveAnswerResponseOk)
+            return object;
+        return new $root.GiveAnswerResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a GiveAnswerResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GiveAnswerResponseOk
+     * @static
+     * @param {GiveAnswerResponseOk} message GiveAnswerResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GiveAnswerResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this GiveAnswerResponseOk to JSON.
+     * @function toJSON
+     * @memberof GiveAnswerResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GiveAnswerResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -6572,6 +9257,54 @@ $root.GiveAnswerResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GiveAnswerResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GiveAnswerResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GiveAnswerResponseErr} GiveAnswerResponseErr
+     */
+    GiveAnswerResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.GiveAnswerResponseErr)
+            return object;
+        var message = new $root.GiveAnswerResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GiveAnswerResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GiveAnswerResponseErr
+     * @static
+     * @param {GiveAnswerResponseErr} message GiveAnswerResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GiveAnswerResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this GiveAnswerResponseErr to JSON.
+     * @function toJSON
+     * @memberof GiveAnswerResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GiveAnswerResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -6745,6 +9478,74 @@ $root.GiveAnswerResponse = (function() {
     };
 
     /**
+     * Creates a GiveAnswerResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GiveAnswerResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GiveAnswerResponse} GiveAnswerResponse
+     */
+    GiveAnswerResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.GiveAnswerResponse)
+            return object;
+        var message = new $root.GiveAnswerResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".GiveAnswerResponse.ok: object expected");
+            message.ok = $root.GiveAnswerResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".GiveAnswerResponse.err: object expected");
+            message.err = $root.GiveAnswerResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GiveAnswerResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GiveAnswerResponse
+     * @static
+     * @param {GiveAnswerResponse} message GiveAnswerResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GiveAnswerResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.GiveAnswerResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.GiveAnswerResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this GiveAnswerResponse to JSON.
+     * @function toJSON
+     * @memberof GiveAnswerResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GiveAnswerResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for GiveAnswerResponse
      * @function getTypeUrl
      * @memberof GiveAnswerResponse
@@ -6868,6 +9669,57 @@ $root.GetGameStateResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GetGameStateResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetGameStateResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetGameStateResponseOk} GetGameStateResponseOk
+     */
+    GetGameStateResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetGameStateResponseOk)
+            return object;
+        var message = new $root.GetGameStateResponseOk();
+        if (object.gamestate != null) {
+            if (typeof object.gamestate !== "object")
+                throw TypeError(".GetGameStateResponseOk.gamestate: object expected");
+            message.gamestate = $root.RootGameState.fromObject(object.gamestate);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetGameStateResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetGameStateResponseOk
+     * @static
+     * @param {GetGameStateResponseOk} message GetGameStateResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetGameStateResponseOk.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.gamestate = null;
+        if (message.gamestate != null && message.hasOwnProperty("gamestate"))
+            object.gamestate = $root.RootGameState.toObject(message.gamestate, options);
+        return object;
+    };
+
+    /**
+     * Converts this GetGameStateResponseOk to JSON.
+     * @function toJSON
+     * @memberof GetGameStateResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetGameStateResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -6997,6 +9849,54 @@ $root.GetGameStateInvalidAuth = (function() {
     };
 
     /**
+     * Creates a GetGameStateInvalidAuth message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetGameStateInvalidAuth
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetGameStateInvalidAuth} GetGameStateInvalidAuth
+     */
+    GetGameStateInvalidAuth.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetGameStateInvalidAuth)
+            return object;
+        var message = new $root.GetGameStateInvalidAuth();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetGameStateInvalidAuth message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetGameStateInvalidAuth
+     * @static
+     * @param {GetGameStateInvalidAuth} message GetGameStateInvalidAuth
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetGameStateInvalidAuth.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this GetGameStateInvalidAuth to JSON.
+     * @function toJSON
+     * @memberof GetGameStateInvalidAuth
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetGameStateInvalidAuth.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for GetGameStateInvalidAuth
      * @function getTypeUrl
      * @memberof GetGameStateInvalidAuth
@@ -7120,6 +10020,54 @@ $root.GetGameStateResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a GetGameStateResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetGameStateResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetGameStateResponseErr} GetGameStateResponseErr
+     */
+    GetGameStateResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetGameStateResponseErr)
+            return object;
+        var message = new $root.GetGameStateResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetGameStateResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetGameStateResponseErr
+     * @static
+     * @param {GetGameStateResponseErr} message GetGameStateResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetGameStateResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this GetGameStateResponseErr to JSON.
+     * @function toJSON
+     * @memberof GetGameStateResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetGameStateResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -7308,6 +10256,84 @@ $root.GetGameStateResponse = (function() {
     };
 
     /**
+     * Creates a GetGameStateResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetGameStateResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetGameStateResponse} GetGameStateResponse
+     */
+    GetGameStateResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetGameStateResponse)
+            return object;
+        var message = new $root.GetGameStateResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".GetGameStateResponse.ok: object expected");
+            message.ok = $root.GetGameStateResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".GetGameStateResponse.err: object expected");
+            message.err = $root.GetGameStateResponseErr.fromObject(object.err);
+        }
+        if (object.invalidAuth != null) {
+            if (typeof object.invalidAuth !== "object")
+                throw TypeError(".GetGameStateResponse.invalidAuth: object expected");
+            message.invalidAuth = $root.GetGameStateInvalidAuth.fromObject(object.invalidAuth);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetGameStateResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetGameStateResponse
+     * @static
+     * @param {GetGameStateResponse} message GetGameStateResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetGameStateResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.GetGameStateResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.GetGameStateResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        if (message.invalidAuth != null && message.hasOwnProperty("invalidAuth")) {
+            object.invalidAuth = $root.GetGameStateInvalidAuth.toObject(message.invalidAuth, options);
+            if (options.oneofs)
+                object.response = "invalidAuth";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this GetGameStateResponse to JSON.
+     * @function toJSON
+     * @memberof GetGameStateResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetGameStateResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
      * Gets the default type url for GetGameStateResponse
      * @function getTypeUrl
      * @memberof GetGameStateResponse
@@ -7416,6 +10442,44 @@ $root.SkipTimeResponseOk = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a SkipTimeResponseOk message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SkipTimeResponseOk
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SkipTimeResponseOk} SkipTimeResponseOk
+     */
+    SkipTimeResponseOk.fromObject = function fromObject(object) {
+        if (object instanceof $root.SkipTimeResponseOk)
+            return object;
+        return new $root.SkipTimeResponseOk();
+    };
+
+    /**
+     * Creates a plain object from a SkipTimeResponseOk message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SkipTimeResponseOk
+     * @static
+     * @param {SkipTimeResponseOk} message SkipTimeResponseOk
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SkipTimeResponseOk.toObject = function toObject() {
+        return {};
+    };
+
+    /**
+     * Converts this SkipTimeResponseOk to JSON.
+     * @function toJSON
+     * @memberof SkipTimeResponseOk
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SkipTimeResponseOk.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -7542,6 +10606,54 @@ $root.SkipTimeResponseErr = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a SkipTimeResponseErr message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SkipTimeResponseErr
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SkipTimeResponseErr} SkipTimeResponseErr
+     */
+    SkipTimeResponseErr.fromObject = function fromObject(object) {
+        if (object instanceof $root.SkipTimeResponseErr)
+            return object;
+        var message = new $root.SkipTimeResponseErr();
+        if (object.err != null)
+            message.err = String(object.err);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a SkipTimeResponseErr message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SkipTimeResponseErr
+     * @static
+     * @param {SkipTimeResponseErr} message SkipTimeResponseErr
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SkipTimeResponseErr.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.err = "";
+        if (message.err != null && message.hasOwnProperty("err"))
+            object.err = message.err;
+        return object;
+    };
+
+    /**
+     * Converts this SkipTimeResponseErr to JSON.
+     * @function toJSON
+     * @memberof SkipTimeResponseErr
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SkipTimeResponseErr.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
@@ -7712,6 +10824,74 @@ $root.SkipTimeResponse = (function() {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Creates a SkipTimeResponse message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof SkipTimeResponse
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {SkipTimeResponse} SkipTimeResponse
+     */
+    SkipTimeResponse.fromObject = function fromObject(object) {
+        if (object instanceof $root.SkipTimeResponse)
+            return object;
+        var message = new $root.SkipTimeResponse();
+        if (object.requestId != null)
+            message.requestId = String(object.requestId);
+        if (object.ok != null) {
+            if (typeof object.ok !== "object")
+                throw TypeError(".SkipTimeResponse.ok: object expected");
+            message.ok = $root.SkipTimeResponseOk.fromObject(object.ok);
+        }
+        if (object.err != null) {
+            if (typeof object.err !== "object")
+                throw TypeError(".SkipTimeResponse.err: object expected");
+            message.err = $root.SkipTimeResponseErr.fromObject(object.err);
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a SkipTimeResponse message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof SkipTimeResponse
+     * @static
+     * @param {SkipTimeResponse} message SkipTimeResponse
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    SkipTimeResponse.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.requestId = "";
+        if (message.requestId != null && message.hasOwnProperty("requestId"))
+            object.requestId = message.requestId;
+        if (message.ok != null && message.hasOwnProperty("ok")) {
+            object.ok = $root.SkipTimeResponseOk.toObject(message.ok, options);
+            if (options.oneofs)
+                object.response = "ok";
+        }
+        if (message.err != null && message.hasOwnProperty("err")) {
+            object.err = $root.SkipTimeResponseErr.toObject(message.err, options);
+            if (options.oneofs)
+                object.response = "err";
+        }
+        return object;
+    };
+
+    /**
+     * Converts this SkipTimeResponse to JSON.
+     * @function toJSON
+     * @memberof SkipTimeResponse
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    SkipTimeResponse.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**

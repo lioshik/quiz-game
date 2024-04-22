@@ -9,6 +9,17 @@ export const StrategyType = {
   SPECIFIC: 1,
 };
 
+export const SelectedAnswerType = {
+  HINT: 0,
+  ANSWER_OPTION: 1,
+};
+
+export const HintType = {
+  SKIP_QUESTION: 0,
+  MAJORITY_OPINION: 1,
+  TWO_OPINIONS: 2,
+};
+
 export function getPlayerWithId(players, playerId) {
   for (const player of players) {
     if (player.playerId === playerId) {

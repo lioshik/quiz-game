@@ -20,11 +20,11 @@ export class WaitForQuestionPage extends Component {
             ></PlayersList>
           </div>
           <div className="gamesplit-right">
-            <GamePhaseTitle text="Waiting for question"></GamePhaseTitle>
-            {iAmHost && <AskQuestion></AskQuestion>}
+              <GamePhaseTitle text="Waiting for question"></GamePhaseTitle>
+              {iAmHost && <AskQuestion></AskQuestion>}
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }

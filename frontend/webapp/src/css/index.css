@@ -245,6 +245,7 @@ header ul {
   padding-right: 5%;
   height: 200px;
   min-width: none;
+  color: #3a2395;
 }
 
 .carousel-button-group {
@@ -664,4 +665,61 @@ input[type="radio"]:focus {
 .submit-button {
   max-width: calc(200px);
   margin-top: 20px;
+}
+
+.question-widget .game-rule-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 100%;
+}
+
+.rightside-widget .game-rule-wrapper {
+  padding-bottom: 15px;
+  max-width: 400px;
+}
+
+.rightside-widget .game-rule-wrapper h3 {
+  padding-top: 15px;
+}
+
+.rightside-widget .game-rule-wrapper p {
+  overflow-wrap: break-word;
+  overflow-y: scroll;
+  overflow-x: auto;
+  height: 100px;
+  font-size: 16px;
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 600px) {
+  .rightside-widget .game-rule-wrapper h3 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 21px;
+  }
+}
+
+.answer-option-button {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.selected-button,
+.selected-button:disabled,
+.selected-button[disabled] {
+  transition-duration: 100ms;
+  background-color: #5ad485;
+  transform: translateY(2px);
+  box-shadow: 0px 3px 0px 0px #301a6bda;
+}
+
+.dead-name {
+  text-decoration: line-through;
 }

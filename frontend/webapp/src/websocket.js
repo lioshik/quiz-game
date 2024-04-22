@@ -7,6 +7,7 @@ class WebSocketService {
     this.url = "";
     this.socket = null;
     this.timeoutByRequestId = new Map();
+    this.callbackByRequestId = new Map();
     this.pollingInterval = null;
   }
 
@@ -38,9 +39,19 @@ class WebSocketService {
     );
   }
 
-  cancelTimeoutMessage(requestId) {
-    const timeout = this.timeoutByRequestId.get(requestId);
+  clearByRequestId(requestId) {
+    this.timeoutByRequestId.delete(requestId);
+    this.callbackByRequestId.delete(requestId);
+  }
+
+  clearTimeoutsAndUseCallbacks(response) {
+    const timeout = this.timeoutByRequestId.get(response.requestId);
     clearTimeout(timeout);
+    const callback = this.callbackByRequestId.get(response.requestId);
+    if (response.hasOwnProperty("ok") && callback !== undefined) {
+      callback(response);
+    }
+    this.clearByRequestId(response.requestId);
   }
 
   sortPlayersByPlayerId = (players) => {
@@ -84,7 +95,7 @@ class WebSocketService {
       if (decodedResponse.hasOwnProperty("createRoom")) {
         console.log("got message type create room");
         const createRoomResponse = decodedResponse.createRoom;
-        this.cancelTimeoutMessage(createRoomResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(createRoomResponse);
 
         if (createRoomResponse.hasOwnProperty("err")) {
           console.warn("error on create room", createRoomResponse.err.err);
@@ -94,7 +105,7 @@ class WebSocketService {
         }
       } else if (decodedResponse.hasOwnProperty("getGamestateResponse")) {
         const getGamestateResponse = decodedResponse.getGamestateResponse;
-        this.cancelTimeoutMessage(getGamestateResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(getGamestateResponse);
 
         if (getGamestateResponse.hasOwnProperty("err")) {
           console.warn("error on get state", getGamestateResponse.err.err);
@@ -120,12 +131,22 @@ class WebSocketService {
               getGamestateResponse.ok.gamestate.waitForAnswer.playersInfo
                 .players
             );
+          } else if (
+            getGamestateResponse.ok.gamestate.hasOwnProperty(
+              "waitForMainPlayer"
+            )
+          ) {
+            this.sortPlayersByPlayerId(
+              getGamestateResponse.ok.gamestate.waitForMainPlayer.playersInfo
+                .players
+            );
           }
+
           this.store.dispatch(setGamestate(getGamestateResponse.ok.gamestate));
         }
       } else if (decodedResponse.hasOwnProperty("joinRoom")) {
         const joinRoomResponse = decodedResponse.joinRoom;
-        this.cancelTimeoutMessage(joinRoomResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(joinRoomResponse);
 
         if (joinRoomResponse.hasOwnProperty("err")) {
           console.warn("error on join room", joinRoomResponse.err.err);
@@ -134,7 +155,7 @@ class WebSocketService {
         }
       } else if (decodedResponse.hasOwnProperty("changeName")) {
         const changeNameResponse = decodedResponse.changeName;
-        this.cancelTimeoutMessage(changeNameResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(changeNameResponse);
 
         if (changeNameResponse.hasOwnProperty("err")) {
           console.warn("error on change name", changeNameResponse.err.err);
@@ -145,7 +166,7 @@ class WebSocketService {
           "got choose main player response",
           chooseMainPlayerResponse
         );
-        this.cancelTimeoutMessage(chooseMainPlayerResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(chooseMainPlayerResponse);
 
         if (chooseMainPlayerResponse.hasOwnProperty("err")) {
           console.log(
@@ -155,17 +176,24 @@ class WebSocketService {
         }
       } else if (decodedResponse.hasOwnProperty("startGameResponse")) {
         const startGameResponse = decodedResponse.startGameResponse;
-        this.cancelTimeoutMessage(startGameResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(startGameResponse);
 
         if (startGameResponse.hasOwnProperty("err")) {
           console.warn("error on start game", startGameResponse.err.err);
         }
+      } else if (decodedResponse.hasOwnProperty("giveAnswerResponse")) {
+        const giveAnswerResponse = decodedResponse.giveAnswerResponse;
+        this.clearTimeoutsAndUseCallbacks(giveAnswerResponse);
+
+        if (giveAnswerResponse.hasOwnProperty("err")) {
+          console.warn("error on give answer", giveAnswerResponse.err.err);
+        }
       } else if (decodedResponse.hasOwnProperty("makeQuestionResponse")) {
         const makeQuestionResponse = decodedResponse.makeQuestionResponse;
-        this.cancelTimeoutMessage(makeQuestionResponse.requestId);
+        this.clearTimeoutsAndUseCallbacks(makeQuestionResponse);
 
         if (makeQuestionResponse.hasOwnProperty("err")) {
-          console.warn("error on start game", makeQuestionResponse.err.err);
+          console.warn("error on make question", makeQuestionResponse.err.err);
         }
       } else {
         console.warn("unknown type of received message");
@@ -332,6 +360,33 @@ class WebSocketService {
     };
     const buffer = RootRequest.encode(requestPayload).finish();
     this.addTimeoutMessage(requestId, "failed to send make question request");
+    this.sendMessageBytes(buffer);
+  }
+
+  sendGiveAnswer(
+    authData,
+    selectedAnswer,
+    isHint,
+    callback = (response) => {
+      console.log("default callback sendAsnwer", response);
+      this.clearByRequestId(response.requestId);
+    }
+  ) {
+    let requestId = this.generateRandomCode();
+    const requestPayload = {
+      giveAnswer: {
+        authData: authData,
+        requestId: requestId,
+        answerIdx: isHint ? null : selectedAnswer,
+        hint: isHint ? selectedAnswer : null,
+      },
+    };
+    const buffer = RootRequest.encode(requestPayload).finish();
+    this.addTimeoutMessage(requestId, "failed to send give answer request");
+    this.callbackByRequestId.set(requestId, (response) => {
+      callback();
+      this.clearByRequestId(response.requestId);
+    });
     this.sendMessageBytes(buffer);
   }
 

@@ -222,6 +222,14 @@ func (state *GameState) PlayerChoosesMainPlayer(
 			*choice,
 		),
 	)
+	if choice.ChoiceType == SpecificChoice {
+		state.logger.Info(
+			fmt.Sprintf(
+				"New selected main player id: %+v",
+				*choice.ChoicePlayerId,
+			),
+		)
+	}
 	return nil
 }
 
@@ -233,6 +241,12 @@ func (state *GameState) chooseMainPlayer() {
 			panic(err)
 		}
 		state.players[*state.chooseMainPlayerStrategy.ChoicePlayerId].playerType = Main
+		state.logger.Info(
+			fmt.Sprintf(
+				"choosed specific main player. id=%s",
+				*state.chooseMainPlayerStrategy.ChoicePlayerId,
+			),
+		)
 	case RandomChoice:
 		playerIds := make([]*PlayerId, 0, len(state.players))
 		for _, player := range state.players {
@@ -243,7 +257,14 @@ func (state *GameState) chooseMainPlayer() {
 		if len(playerIds) < 2 {
 			panic("too few players")
 		}
-		state.players[*playerIds[rand.Int()%len(playerIds)]].playerType = Main
+		choice := *playerIds[rand.Int()%len(playerIds)]
+		state.players[choice].playerType = Main
+		state.logger.Info(
+			fmt.Sprintf(
+				"choosed random main player. id=%s",
+				choice,
+			),
+		)
 	default:
 		panic("unknown choice type")
 	}
@@ -388,11 +409,18 @@ func (state *GameState) endWaitingForAnswer() {
 		mainPlayerId            *PlayerId = nil
 	)
 	for id, player := range state.players {
+		id := id
 		switch player.playerType {
 		case Host:
 			continue
 		case Main:
 			mainPlayerId = &id
+			state.logger.Info(
+				fmt.Sprintf(
+					"Player with id=%s is main",
+					*mainPlayerId,
+				),
+			)
 			if player.answerGiven {
 				shouldWaitForMainPlayer = false
 			}
@@ -411,6 +439,9 @@ func (state *GameState) endWaitingForAnswer() {
 		panic("Not found main player")
 	}
 	if !shouldWaitForMainPlayer {
+		state.logger.Info(
+			fmt.Sprintf("About to end waiting for main player. Main player id=%s", *mainPlayerId),
+		)
 		state.endWaitingForMainPlayer(mainPlayerId, state.players[*mainPlayerId].answer)
 		return
 	}
@@ -432,6 +463,26 @@ func (state *GameState) killWrongRegularPlayers() {
 	}
 }
 
+func (state *GameState) gameOverIfAllRegularPlayersDied() bool {
+	atLeastOneAlive := false
+	for _, player := range state.players {
+		if player.playerType == Regular && player.alive {
+			atLeastOneAlive = true
+			break
+		}
+	}
+
+	if !atLeastOneAlive {
+		state.logger.Info("All regular players died. Game over")
+		state.logger.Info("All regular players died. Game over")
+		state.logger.Info("All regular players died. Game over")
+		state.stateType = GameOver
+		return true
+	}
+
+	return false
+}
+
 func (state *GameState) mainPlayerDied(mainPlayerId *PlayerId) {
 	if _, exists := state.players[*mainPlayerId]; !exists {
 		panic("no player with such id")
@@ -450,6 +501,7 @@ func (state *GameState) mainPlayerDied(mainPlayerId *PlayerId) {
 func (state *GameState) spoilTwoAnswers() []*SpoiledAnswer {
 	result := make([]*SpoiledAnswer, 0, len(state.players))
 	for id, player := range state.players {
+		id := id
 		switch player.playerType {
 		case Main, Host:
 			continue
@@ -519,6 +571,9 @@ func (state *GameState) endWaitingForMainPlayer(
 		switch mainPlayerAnswer.HintType {
 		case SkipQuestion:
 			state.killWrongRegularPlayers()
+			if state.gameOverIfAllRegularPlayersDied() {
+				return
+			}
 			state.beginWaitingForQuestion()
 			return
 		case TwoOpinions:
@@ -528,6 +583,9 @@ func (state *GameState) endWaitingForMainPlayer(
 			majorityOpinion := state.getMajorityOpinion()
 			if majorityOpinion != state.questionInfo.RightAnswerIdx {
 				state.killWrongRegularPlayers()
+				if state.gameOverIfAllRegularPlayersDied() {
+					return
+				}
 				state.logger.Info(
 					fmt.Sprintf(
 						"Main player with id=%q died due to wrong majority opinion",
@@ -537,6 +595,9 @@ func (state *GameState) endWaitingForMainPlayer(
 				state.mainPlayerDied(mainPlayerId)
 			} else {
 				state.killWrongRegularPlayers()
+				if state.gameOverIfAllRegularPlayersDied() {
+					return
+				}
 				state.beginWaitingForQuestion()
 			}
 			return
@@ -545,6 +606,9 @@ func (state *GameState) endWaitingForMainPlayer(
 		}
 	case SpecificAnswer:
 		state.killWrongRegularPlayers()
+		if state.gameOverIfAllRegularPlayersDied() {
+			return
+		}
 		if mainPlayerAnswer.AnswerIdx != state.questionInfo.RightAnswerIdx {
 			state.logger.Info(
 				fmt.Sprintf(
@@ -555,7 +619,6 @@ func (state *GameState) endWaitingForMainPlayer(
 			state.mainPlayerDied(mainPlayerId)
 			return
 		}
-		// TODO add score
 		state.beginWaitingForQuestion()
 	default:
 		panic("unknown answer type")
@@ -568,7 +631,6 @@ func (state *GameState) NotifyTimePassed(milisecondsAmount uint64) {
 	}
 	if state.milisecondsLeft < milisecondsAmount {
 		state.endWaitingForAnswer()
-		state.logger.Info("WaitForAnswer phase is ended")
 		return
 	}
 	state.milisecondsLeft -= milisecondsAmount

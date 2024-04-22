@@ -17,9 +17,11 @@ export class MainSection extends Component {
         {gamestate !== null && gamestate.hasOwnProperty("waitForQuestion") && (
           <WaitForQuestionPage />
         )}
-        {gamestate !== null && gamestate.hasOwnProperty("waitForAnswer") && (
-          <WaitForAnswerPage/>
-        )}
+        {gamestate !== null &&
+          (gamestate.hasOwnProperty("waitForAnswer") ||
+            gamestate.hasOwnProperty("waitForMainPlayer")) && (
+            <WaitForAnswerPage />
+          )}
       </main>
     );
   }

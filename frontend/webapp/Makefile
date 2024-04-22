@@ -8,7 +8,6 @@ generate_protobuf:
 	node_modules/.bin/pbjs \
 	--no-create \
 	--no-verify \
-	--no-convert \
 	-t  static-module -w commonjs -o "${proto_codegen_output}" ../../backend/game_server/api/*\.proto 
 	{ echo "/*eslint-disable*/"; cat "${proto_codegen_output}"; } > "${proto_codegen_output}.new"
 	mv "${proto_codegen_output}.new" "${proto_codegen_output}"

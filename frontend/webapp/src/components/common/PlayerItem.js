@@ -4,6 +4,7 @@ import { FaMicrophone } from "react-icons/fa";
 import { ReactFitty } from "react-fitty";
 import { PlayerType } from "./CommonUtils";
 import { GiQueenCrown } from "react-icons/gi";
+import { FaSkullCrossbones } from "react-icons/fa";
 
 export class PlayerItem extends Component {
   render() {
@@ -29,19 +30,21 @@ export class PlayerItem extends Component {
       default:
         playerIcon =
           player.playerId === this.props.mainPlayerChoiceId ? (
-            (playerIcon = (
-              <GiQueenCrown className="player-icon"></GiQueenCrown>
-            ))
+            (playerIcon = <GiQueenCrown className="player-icon"></GiQueenCrown>)
           ) : (
             <IoPersonCircleSharp className="player-icon"></IoPersonCircleSharp>
           );
+    }
+    const isDead = !player.stillAlive;
+    if (isDead) {
+      playerIcon = <FaSkullCrossbones className="player-icon" />;
     }
 
     return (
       <li className={playerItemClassname}>
         <div className="player-status-name">
           {playerIcon}
-          <div className="player-name">
+          <div className={`player-name ${isDead ? "dead-name" : ""}`}>
             <ReactFitty className="player-name-span" maxSize={16} minSize={5}>
               {player.playerName}
             </ReactFitty>

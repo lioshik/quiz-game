@@ -1,17 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { webSocketService } from ".";
+import { AuthData, RootGameState } from "./gen/proto_codegen";
 
 export const ActionType = {
   GO_START_PAGE: "GO_START_PAGE",
   SET_GAMESTATE: "SET_GAMESTATE",
   SET_AUTH_DATA: "SET_AUTH_DATA",
-  SET_SELECTED_ANSWER_IDX: "SET_SELECTED_ANSWER_IDX",
+  SET_SELECTED_ANSWER: "SET_SELECTED_ANSWER",
 };
 
 const defaultState = {
   authData: null,
   gamestate: null,
-  selectedAnswerIdx: 0,
+  selectedAnswer: null,
 };
 
 // Action creators
@@ -36,6 +37,13 @@ export function setGamestate(gamestate) {
   };
 }
 
+export function setSelectedAnswer(selectedAnswer) {
+  return {
+    type: ActionType.SET_SELECTED_ANSWER,
+    selectedAnswer: selectedAnswer,
+  };
+}
+
 // Reducer
 
 const rootReducer = (state, action) => {
@@ -51,10 +59,10 @@ const rootReducer = (state, action) => {
         ...state,
         gamestate: action.gamestate,
       };
-    case ActionType.SET_SELECTED_ANSWER_IDX:
+    case ActionType.SET_SELECTED_ANSWER:
       return {
         ...state,
-        selectedAnswerIdx: action.selectedAnswerIdx,
+        selectedAnswer: action.selectedAnswer,
       };
     case ActionType.GO_START_PAGE:
       webSocketService.stopPolling();
@@ -73,6 +81,12 @@ const loadState = () => {
       return defaultState;
     }
     const result = JSON.parse(serializedState);
+    if (result.hasOwnProperty("gamestate")) {
+      result.gamestate = RootGameState.fromObject(result.gamestate);
+    }
+    if (result.hasOwnProperty("authData")) {
+      result.authData = AuthData.fromObject(result.authData);
+    }
     console.log("loaded state", result);
     return result;
   } catch (err) {
