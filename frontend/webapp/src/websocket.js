@@ -140,6 +140,12 @@ class WebSocketService {
               getGamestateResponse.ok.gamestate.waitForMainPlayer.playersInfo
                 .players
             );
+          } else if (
+            getGamestateResponse.ok.gamestate.hasOwnProperty("gameOver")
+          ) {
+            this.sortPlayersByPlayerId(
+              getGamestateResponse.ok.gamestate.gameOver.playersInfo.players
+            );
           }
 
           this.store.dispatch(setGamestate(getGamestateResponse.ok.gamestate));

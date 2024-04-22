@@ -29,6 +29,11 @@ export class GamePhaseTitle extends Component {
           {shouldShowTimer && <br></br>}
           {shouldShowTimer &&
             millisecondsToMinutesAndSeconds(this.props.milisecondsLeft)}
+          {/* second line text */}
+          {this.props.secondLineText !== null ? <br></br> : null}
+          {this.props.secondLineText !== null
+            ? this.props.secondLineText
+            : null}
         </h2>
       </div>
     );
@@ -37,6 +42,7 @@ export class GamePhaseTitle extends Component {
 
 GamePhaseTitle.defaultProps = {
   text: "",
+  secondLineText: null,
   roomCode: null,
   milisecondsLeft: null,
   noTimer: false,

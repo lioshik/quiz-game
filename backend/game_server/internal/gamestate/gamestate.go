@@ -16,7 +16,6 @@ const (
 	WaitForQuestion
 	WaitForAnswer
 	WaitForMainPlayer
-	RoundResultState
 	GameOver
 )
 
@@ -40,6 +39,13 @@ type AnswerType int
 const (
 	SpecificAnswer AnswerType = iota
 	HintAnswer
+)
+
+type GameOverReason int
+
+const (
+	AllRegularPlayersDied = iota
+	MainPlayerDied
 )
 
 type HintType int
@@ -103,6 +109,7 @@ type GameState struct {
 	milisecondsLeft          uint64
 	questionInfo             *QuestionInfo
 	spoiledAnswers           []*SpoiledAnswer
+	gameOverReason           GameOverReason
 	logger                   *slog.Logger
 }
 
@@ -477,6 +484,7 @@ func (state *GameState) gameOverIfAllRegularPlayersDied() bool {
 		state.logger.Info("All regular players died. Game over")
 		state.logger.Info("All regular players died. Game over")
 		state.stateType = GameOver
+		state.gameOverReason = AllRegularPlayersDied
 		return true
 	}
 
@@ -490,12 +498,12 @@ func (state *GameState) mainPlayerDied(mainPlayerId *PlayerId) {
 	if state.players[*mainPlayerId].playerType != Main {
 		panic("player type is not main")
 	}
-	// TODO
 	state.logger.Info(fmt.Sprintf("Main player with id=%q died. Game over", *mainPlayerId))
 	state.logger.Info(fmt.Sprintf("Main player with id=%q died. Game over", *mainPlayerId))
 	state.logger.Info(fmt.Sprintf("Main player with id=%q died. Game over", *mainPlayerId))
 	state.players[*mainPlayerId].alive = false
 	state.stateType = GameOver
+	state.gameOverReason = MainPlayerDied
 }
 
 func (state *GameState) spoilTwoAnswers() []*SpoiledAnswer {
@@ -570,6 +578,7 @@ func (state *GameState) endWaitingForMainPlayer(
 		*hintAvailability = false
 		switch mainPlayerAnswer.HintType {
 		case SkipQuestion:
+			state.mainPlayerScore++
 			state.killWrongRegularPlayers()
 			if state.gameOverIfAllRegularPlayersDied() {
 				return
@@ -594,6 +603,7 @@ func (state *GameState) endWaitingForMainPlayer(
 				)
 				state.mainPlayerDied(mainPlayerId)
 			} else {
+				state.mainPlayerScore++
 				state.killWrongRegularPlayers()
 				if state.gameOverIfAllRegularPlayersDied() {
 					return
@@ -605,11 +615,11 @@ func (state *GameState) endWaitingForMainPlayer(
 			panic("unknown hint type")
 		}
 	case SpecificAnswer:
-		state.killWrongRegularPlayers()
-		if state.gameOverIfAllRegularPlayersDied() {
-			return
-		}
 		if mainPlayerAnswer.AnswerIdx != state.questionInfo.RightAnswerIdx {
+			state.killWrongRegularPlayers()
+			if state.gameOverIfAllRegularPlayersDied() {
+				return
+			}
 			state.logger.Info(
 				fmt.Sprintf(
 					"Main player with id=%q died due to wrong answer",
@@ -617,6 +627,11 @@ func (state *GameState) endWaitingForMainPlayer(
 				),
 			)
 			state.mainPlayerDied(mainPlayerId)
+			return
+		}
+		state.mainPlayerScore++
+		state.killWrongRegularPlayers()
+		if state.gameOverIfAllRegularPlayersDied() {
 			return
 		}
 		state.beginWaitingForQuestion()

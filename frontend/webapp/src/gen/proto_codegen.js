@@ -2432,12 +2432,29 @@ $root.WaitForMainPlayerState = (function() {
     return WaitForMainPlayerState;
 })();
 
+/**
+ * GameOverReason enum.
+ * @exports GameOverReason
+ * @enum {number}
+ * @property {number} allRegularPlayersDied=0 allRegularPlayersDied value
+ * @property {number} mainPlayerDied=1 mainPlayerDied value
+ */
+$root.GameOverReason = (function() {
+    var valuesById = {}, values = Object.create(valuesById);
+    values[valuesById[0] = "allRegularPlayersDied"] = 0;
+    values[valuesById[1] = "mainPlayerDied"] = 1;
+    return values;
+})();
+
 $root.GameOver = (function() {
 
     /**
      * Properties of a GameOver.
      * @exports IGameOver
      * @interface IGameOver
+     * @property {IRunningGamePlayersInfo|null} [playersInfo] GameOver playersInfo
+     * @property {GameOverReason|null} [gameOverReason] GameOver gameOverReason
+     * @property {number|Long|null} [mainPlayerScore] GameOver mainPlayerScore
      */
 
     /**
@@ -2456,6 +2473,30 @@ $root.GameOver = (function() {
     }
 
     /**
+     * GameOver playersInfo.
+     * @member {IRunningGamePlayersInfo|null|undefined} playersInfo
+     * @memberof GameOver
+     * @instance
+     */
+    GameOver.prototype.playersInfo = null;
+
+    /**
+     * GameOver gameOverReason.
+     * @member {GameOverReason} gameOverReason
+     * @memberof GameOver
+     * @instance
+     */
+    GameOver.prototype.gameOverReason = 0;
+
+    /**
+     * GameOver mainPlayerScore.
+     * @member {number|Long} mainPlayerScore
+     * @memberof GameOver
+     * @instance
+     */
+    GameOver.prototype.mainPlayerScore = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+    /**
      * Encodes the specified GameOver message. Does not implicitly {@link GameOver.verify|verify} messages.
      * @function encode
      * @memberof GameOver
@@ -2467,6 +2508,12 @@ $root.GameOver = (function() {
     GameOver.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
+        if (message.playersInfo != null && Object.hasOwnProperty.call(message, "playersInfo"))
+            $root.RunningGamePlayersInfo.encode(message.playersInfo, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.gameOverReason != null && Object.hasOwnProperty.call(message, "gameOverReason"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gameOverReason);
+        if (message.mainPlayerScore != null && Object.hasOwnProperty.call(message, "mainPlayerScore"))
+            writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.mainPlayerScore);
         return writer;
     };
 
@@ -2501,6 +2548,18 @@ $root.GameOver = (function() {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
+            case 1: {
+                    message.playersInfo = $root.RunningGamePlayersInfo.decode(reader, reader.uint32());
+                    break;
+                }
+            case 2: {
+                    message.gameOverReason = reader.int32();
+                    break;
+                }
+            case 3: {
+                    message.mainPlayerScore = reader.uint64();
+                    break;
+                }
             default:
                 reader.skipType(tag & 7);
                 break;
@@ -2536,7 +2595,38 @@ $root.GameOver = (function() {
     GameOver.fromObject = function fromObject(object) {
         if (object instanceof $root.GameOver)
             return object;
-        return new $root.GameOver();
+        var message = new $root.GameOver();
+        if (object.playersInfo != null) {
+            if (typeof object.playersInfo !== "object")
+                throw TypeError(".GameOver.playersInfo: object expected");
+            message.playersInfo = $root.RunningGamePlayersInfo.fromObject(object.playersInfo);
+        }
+        switch (object.gameOverReason) {
+        default:
+            if (typeof object.gameOverReason === "number") {
+                message.gameOverReason = object.gameOverReason;
+                break;
+            }
+            break;
+        case "allRegularPlayersDied":
+        case 0:
+            message.gameOverReason = 0;
+            break;
+        case "mainPlayerDied":
+        case 1:
+            message.gameOverReason = 1;
+            break;
+        }
+        if (object.mainPlayerScore != null)
+            if ($util.Long)
+                (message.mainPlayerScore = $util.Long.fromValue(object.mainPlayerScore)).unsigned = true;
+            else if (typeof object.mainPlayerScore === "string")
+                message.mainPlayerScore = parseInt(object.mainPlayerScore, 10);
+            else if (typeof object.mainPlayerScore === "number")
+                message.mainPlayerScore = object.mainPlayerScore;
+            else if (typeof object.mainPlayerScore === "object")
+                message.mainPlayerScore = new $util.LongBits(object.mainPlayerScore.low >>> 0, object.mainPlayerScore.high >>> 0).toNumber(true);
+        return message;
     };
 
     /**
@@ -2548,8 +2638,29 @@ $root.GameOver = (function() {
      * @param {$protobuf.IConversionOptions} [options] Conversion options
      * @returns {Object.<string,*>} Plain object
      */
-    GameOver.toObject = function toObject() {
-        return {};
+    GameOver.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.playersInfo = null;
+            object.gameOverReason = options.enums === String ? "allRegularPlayersDied" : 0;
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, true);
+                object.mainPlayerScore = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.mainPlayerScore = options.longs === String ? "0" : 0;
+        }
+        if (message.playersInfo != null && message.hasOwnProperty("playersInfo"))
+            object.playersInfo = $root.RunningGamePlayersInfo.toObject(message.playersInfo, options);
+        if (message.gameOverReason != null && message.hasOwnProperty("gameOverReason"))
+            object.gameOverReason = options.enums === String ? $root.GameOverReason[message.gameOverReason] === undefined ? message.gameOverReason : $root.GameOverReason[message.gameOverReason] : message.gameOverReason;
+        if (message.mainPlayerScore != null && message.hasOwnProperty("mainPlayerScore"))
+            if (typeof message.mainPlayerScore === "number")
+                object.mainPlayerScore = options.longs === String ? String(message.mainPlayerScore) : message.mainPlayerScore;
+            else
+                object.mainPlayerScore = options.longs === String ? $util.Long.prototype.toString.call(message.mainPlayerScore) : options.longs === Number ? new $util.LongBits(message.mainPlayerScore.low >>> 0, message.mainPlayerScore.high >>> 0).toNumber(true) : message.mainPlayerScore;
+        return object;
     };
 
     /**

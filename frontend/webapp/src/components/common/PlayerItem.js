@@ -5,6 +5,7 @@ import { ReactFitty } from "react-fitty";
 import { PlayerType } from "./CommonUtils";
 import { GiQueenCrown } from "react-icons/gi";
 import { FaSkullCrossbones } from "react-icons/fa";
+import { FaSkull } from "react-icons/fa";
 
 export class PlayerItem extends Component {
   render() {
@@ -37,7 +38,11 @@ export class PlayerItem extends Component {
     }
     const isDead = !player.stillAlive;
     if (isDead) {
-      playerIcon = <FaSkullCrossbones className="player-icon" />;
+      if (player.playerType !== PlayerType.MAIN) {
+        playerIcon = <FaSkullCrossbones className="player-icon" />;
+      } else {
+        playerIcon = <FaSkull className="player-icon" />;
+      }
     }
 
     return (

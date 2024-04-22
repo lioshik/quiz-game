@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import LobbyPage from "./lobby_page/LobbyPage";
 import WaitForQuestionPage from "./wait_for_question/WaitForQuestionPage";
 import WaitForAnswerPage from "./wait_for_answer/WaitForAnswerPage";
+import GameOverPage from "./game_over/GameOverPage";
 
 export class MainSection extends Component {
   render() {
@@ -22,6 +23,9 @@ export class MainSection extends Component {
             gamestate.hasOwnProperty("waitForMainPlayer")) && (
             <WaitForAnswerPage />
           )}
+        {gamestate !== null && gamestate.hasOwnProperty("gameOver") && (
+          <GameOverPage/>
+        )}
       </main>
     );
   }

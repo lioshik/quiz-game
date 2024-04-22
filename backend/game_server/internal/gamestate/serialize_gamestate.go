@@ -44,6 +44,17 @@ func (state *GameState) serializePlayersInfo() *messages.RunningGamePlayersInfo 
 	return result
 }
 
+func (state *GameState) serializeGameOverReason() messages.GameOverReason {
+	switch state.gameOverReason {
+	case AllRegularPlayersDied:
+		return messages.GameOverReason_allRegularPlayersDied
+	case MainPlayerDied:
+		return messages.GameOverReason_mainPlayerDied
+	default:
+		panic("uknown game over reason")
+	}
+}
+
 func (state *GameState) serializeQuestinInfo() *messages.QuestionInfo {
 	result := &messages.QuestionInfo{
 		Question: string(*state.questionInfo.Question),
@@ -108,11 +119,13 @@ func (state *GameState) Serialize() *messages.RootGameState {
 		result.State = &messages.RootGameState_WaitForMainPlayer{
 			WaitForMainPlayer: waitForMainPlayer,
 		}
-	case RoundResultState:
-		panic("TODO")
 	case GameOver:
 		result.State = &messages.RootGameState_GameOver{
-			GameOver: &messages.GameOver{},
+			GameOver: &messages.GameOver{
+				PlayersInfo:     state.serializePlayersInfo(),
+				MainPlayerScore: uint64(state.mainPlayerScore),
+				GameOverReason:  state.serializeGameOverReason(),
+			},
 		}
 	default:
 		panic("unknown game state")

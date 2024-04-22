@@ -72,16 +72,13 @@ message WaitForMainPlayerState {
     repeated SpoiledAnswer spoiled_answers = 3;
 }
 
-// TODO
-// message RoundResultsState {
-//     RunningGamePlayersInfo players_info = 1;
-//     QuestionInfo question_info = 2;
-//     uint32 right_answer_idx = 3;
-//     map<uint32, uint32> players_answers = 4;
-//     optional HintType hint_taken = 5;
-//     bool is_over = 6;
-// }
+enum GameOverReason {
+    allRegularPlayersDied = 0;
+    mainPlayerDied = 1;
+}
 
 message GameOver {
-    // TODO
+    RunningGamePlayersInfo players_info = 1;
+    GameOverReason game_over_reason = 2;
+    uint64 main_player_score = 3;
 }

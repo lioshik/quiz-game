@@ -20,6 +20,11 @@ export const HintType = {
   TWO_OPINIONS: 2,
 };
 
+export const GameOverReasonType = {
+  ALL_REGULAR_PLAYERS_DIED: 0,
+  MAIN_PLAYER_DIED: 1,
+};
+
 export function getPlayerWithId(players, playerId) {
   for (const player of players) {
     if (player.playerId === playerId) {

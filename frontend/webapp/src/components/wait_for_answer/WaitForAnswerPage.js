@@ -28,6 +28,7 @@ export class WaitForAnswerPage extends Component {
                   : "Waiting for answer"
               }
               milisecondsLeft={this.props.milisecondsLeft}
+              noTimer={iAmMain}
             ></GamePhaseTitle>
             <div className="rightside-widget question-widget">
               <div className="game-rule-wrapper">
