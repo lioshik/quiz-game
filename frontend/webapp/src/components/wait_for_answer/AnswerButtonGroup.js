@@ -78,7 +78,7 @@ export class AnswerButtonGroup extends Component {
         </ol>
         {!iAmHost ? null : (
           <span className="small-clarification-text">
-            Host cant's give answers
+            Host can't give answers
           </span>
         )}
         {iAmAlive ? null : (

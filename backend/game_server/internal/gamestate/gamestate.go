@@ -413,6 +413,7 @@ func (state *GameState) PlayerGivesAnswer(playerId *PlayerId, givenAnswer *Given
 func (state *GameState) endWaitingForAnswer() {
 	var (
 		shouldWaitForMainPlayer           = true
+		shouldSpoilTwoAnswers             = false
 		mainPlayerId            *PlayerId = nil
 	)
 	for id, player := range state.players {
@@ -429,7 +430,11 @@ func (state *GameState) endWaitingForAnswer() {
 				),
 			)
 			if player.answerGiven {
-				shouldWaitForMainPlayer = false
+				if player.answer.AnswerType == HintAnswer && player.answer.HintType == TwoOpinions {
+					shouldSpoilTwoAnswers = true
+				} else {
+					shouldWaitForMainPlayer = false
+				}
 			}
 		case Regular:
 			if !player.answerGiven {
@@ -451,6 +456,11 @@ func (state *GameState) endWaitingForAnswer() {
 		)
 		state.endWaitingForMainPlayer(mainPlayerId, state.players[*mainPlayerId].answer)
 		return
+	}
+	if shouldSpoilTwoAnswers {
+		twoOpinionsAvailability := state.hintAvailabilityReference(TwoOpinions)
+		*twoOpinionsAvailability = false
+		state.spoiledAnswers = state.spoilTwoAnswers()
 	}
 	state.logger.Info("Game going to state WaitForMainPlayer")
 	state.stateType = WaitForMainPlayer
@@ -532,6 +542,7 @@ func (state *GameState) spoilTwoAnswers() []*SpoiledAnswer {
 		result[i], result[j] = result[j], result[i]
 	})
 	if len(result) > 2 {
+		state.logger.Info(fmt.Sprintf("Two spoiled answers result: %+v", result[:2]))
 		return result[:2]
 	}
 	state.logger.Info(fmt.Sprintf("Two spoiled answers result: %+v", result))

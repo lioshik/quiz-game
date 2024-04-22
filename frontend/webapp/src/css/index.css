@@ -723,3 +723,65 @@ input[type="radio"]:focus {
 .dead-name {
   text-decoration: line-through;
 }
+
+.hint-buttons-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hint-buttons-widget .small-clarification-text {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.hint-button {
+  padding: 10px;
+}
+
+.hint-placeholder {
+  padding: 10px;
+  line-height: 1.15;
+  border: 2px solid rgba(221, 221, 221, 0.77);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(221, 221, 221, 0.77);
+  transform: translateY(2px);
+}
+
+.hint-placeholder svg {
+  font-size: 24.7px;
+  height: 1em;
+  filter: grayscale(1) brightness(220%) contrast(90%);
+  opacity: 0.77;
+}
+
+.spoiled-answers-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.spoiled-answers-list .game-rule-wrapper {
+  width: 48%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.rightside-widget .spoiled-answers-list h3 {
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.rightside-widget .spoiled-answers-list p {
+  height: 100%;
+  max-height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.spoiled-answers-widget .game-rule-wrapper {
+  padding-bottom: 10px;
+}

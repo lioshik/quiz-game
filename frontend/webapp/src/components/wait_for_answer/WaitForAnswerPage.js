@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import GamePhaseTitle from "../common/GamePhaseTitle";
 import { PlayerType, getPlayerWithId } from "../common/CommonUtils";
 import AnswerButtonGroup from "./AnswerButtonGroup";
+import HintsButtonGroup from "./HintsButtonGroup";
+import SpoiledAnswers from "./SpoiledAnswers";
 
 export class WaitForAnswerPage extends Component {
   render() {
@@ -36,6 +38,8 @@ export class WaitForAnswerPage extends Component {
                 <p>{this.props.question}</p>
               </div>
             </div>
+            <SpoiledAnswers />
+            <HintsButtonGroup />
             <AnswerButtonGroup />
           </div>
         </div>

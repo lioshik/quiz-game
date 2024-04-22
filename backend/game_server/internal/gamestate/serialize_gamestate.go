@@ -74,6 +74,19 @@ func (state *GameState) serializeQuestinInfo() *messages.QuestionInfo {
 	return result
 }
 
+func (state *GameState) serializeSpoiledAnswers() []*messages.SpoiledAnswer {
+	result := make([]*messages.SpoiledAnswer, 0, 2)
+
+	for _, spoiledAnswer := range state.spoiledAnswers {
+		result = append(result, &messages.SpoiledAnswer{
+			PlayerId:  string(*spoiledAnswer.playerId),
+			AnswerIdx: uint32(spoiledAnswer.answerIdx),
+		})
+	}
+
+	return result
+}
+
 func (state *GameState) Serialize() *messages.RootGameState {
 	result := &messages.RootGameState{}
 
@@ -113,7 +126,7 @@ func (state *GameState) Serialize() *messages.RootGameState {
 		waitForMainPlayer := &messages.WaitForMainPlayerState{
 			PlayersInfo:    state.serializePlayersInfo(),
 			QuestionInfo:   state.serializeQuestinInfo(),
-			SpoiledAnswers: make([]*messages.SpoiledAnswer, 0), // TODO
+			SpoiledAnswers: state.serializeSpoiledAnswers(),
 		}
 
 		result.State = &messages.RootGameState_WaitForMainPlayer{

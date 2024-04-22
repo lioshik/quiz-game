@@ -110,9 +110,20 @@ func (h *ClientsHub) addRoom() roomCode {
 						h.gamestateByCodeGuard.Lock()
 						guardedGamestate := h.gamestateByCode[code]
 						h.gamestateByCodeGuard.Unlock()
-						guardedGamestate.guard.Lock()
-						guardedGamestate.state.NotifyTimePassed(TickerMilisecondsThreshold)
-						guardedGamestate.guard.Unlock()
+						func() {
+							guardedGamestate.guard.Lock()
+							defer guardedGamestate.guard.Unlock()
+							defer func() {
+								if r := recover(); r != nil {
+									slog.Error(
+										"RECOVER FROM PANIC when time passed",
+										"panic_trace",
+										r,
+									)
+								}
+							}()
+							guardedGamestate.state.NotifyTimePassed(TickerMilisecondsThreshold)
+						}()
 					case <-tickerStop:
 						return
 					}
