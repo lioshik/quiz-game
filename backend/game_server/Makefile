@@ -18,8 +18,14 @@ build_server: run_code_generation
 docker_build_image:
 	docker build -t game_server .
 
-docker_run: docker_build_image
-	docker rm -f game_server_container
+docker_rm_previous_container:
+	-docker rm -f game_server_container
+
+docker_run: docker_build_image docker_rm_previous_container
 	docker run -p 8080:8080 -it --name game_server_container game_server
 
-.PHONY:  run_server run_server_debug run_code_generation generate_protobuf clean_generated_files docker_build_image build_server docker_run
+docker_run_persistent: docker_build_image docker_rm_previous_container
+	docker run --restart=unless-stopped -p 8080:8080 --name game_server_container game_server
+
+.PHONY:  run_server run_server_debug run_code_generation generate_protobuf clean_generated_files\
+        docker_build_image build_server docker_run docker_rm_previous_container docker_run_persistent
