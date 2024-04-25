@@ -1,3 +1,4 @@
+import consoleDisabled from "./disable_console";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
@@ -8,16 +9,18 @@ import "./css/index.css";
 import "./css/scrollbar.css";
 import App from "./App";
 
+if (consoleDisabled) {
+  console.log(
+    "running productino build. logging disabled. you shouldn't see this message"
+  );
+} else {
+  console.log("running dev build. logging enabled");
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const webSocketService = new WebSocketService(store);
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 webSocketService.connect(backendUrl);
-
-if (process.env.NODE_ENV === 'production') {
-  console.log = () => {}
-  console.error = () => {}
-  console.debug = () => {}
-}
 
 export { webSocketService };
 
